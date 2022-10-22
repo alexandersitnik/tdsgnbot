@@ -1,11 +1,11 @@
-name: main-CD
+name: master-CD
 
 env:
   DOCKER_LOGIN: ${{ secrets.DOCKERHUB_LOGIN }}
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "master" ]
 
 jobs:
   build_image:
