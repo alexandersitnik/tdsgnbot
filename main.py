@@ -14,7 +14,7 @@ logging.basicConfig(level=logging.INFO)
 
 async def on_startup(_):
     print('Бот запущен')
-
+#комментарий
 register_handlers(dp)
 register_handlers_check(dp)
 register_handlers_deception(dp)
