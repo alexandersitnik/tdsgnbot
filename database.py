@@ -1,6 +1,7 @@
 from email import message
 import sqlite3
 from unicodedata import name
+from datetime import datetime
 
 currentId = None
 
@@ -39,6 +40,11 @@ async def sql_add_deception(state):
         c.execute("INSERT INTO deseption VALUES (?, ?, ?)", tuple(data.values()))
         db.commit()
 
+async def sql_add_distant(state):
+    async with state.proxy() as data:
+        c.execute("INSERT INTO distant VALUES (?, ?)", tuple(data.values()))
+        db.commit()
+
 def sql_get_last_deception():
     last_deception = c.execute("SELECT * FROM deseption").fetchall()
     for el in last_deception:
@@ -47,3 +53,6 @@ def sql_get_last_deception():
             + 'Текст обмана: ' + el[2] + '\n'
         return last_deception_text
 print(sql_get_last_deception())
+
+test_date = datetime.strptime('22/10/2022', "%d/%m/%Y")
+print(test_date)
