@@ -13,7 +13,8 @@ async def send_members(message: types.Message):
 
 async def help_command(message: types.Message):
     await message.answer("Вот какие команды ты можешь использовать:\n\n " + 
-    "/help - вывести список команд\n\n" +
+    "/help - вывести список команд\n" +
+    "/whats_new - узнать что нового в текущей версии\n\n" +
     "УДАЛЁНКА\n\n"
     "/distant - записаться на удалёнку\n" +
     "/my_distant - вывести свои удалёнки месяца\n" +
@@ -22,9 +23,17 @@ async def help_command(message: types.Message):
     "/vacation - подать заявление на отпуск\n" + 
     "/my_vacations - посмотреть свои отпуска\n" + 
     "/today_vacations - посмотреть кто сегодня в отпуске\n\n" + 
+    "БОЛЬНИЧНЫЕ\n\n" + 
+    "/sick – сообщить о своём больничном\n" +
+    "/who_is_sick_today – узнать кто сегодня на больничном\n" +  
     "/feedback - отправить обратную связь\n\n" +
-    "/log_out - сбросить регистрацию\n\n")
+    "/log_out - сбросить регистрацию\n\n" +
+    "v 1.1")
+
+async def whatsnew(message: types.Message):
+    await message.answer("v 1.1\nДобавлены команды /sick и /who_is_sick_today")
 
 def register_handlers(dp : Dispatcher):
     dp.register_message_handler(send_members, commands = ['members'])
     dp.register_message_handler(help_command, commands = ['help'])
+    dp.register_message_handler(whatsnew, commands = ['whats_new'])
