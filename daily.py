@@ -1,35 +1,51 @@
 from datetime import datetime
 from aiogram import types, Dispatcher
+from create_bot import bot
 import sqlite3
+
+superAdmin_ID = 265007461
 
 try:
     db = sqlite3.connect('./data/tdsgnBotBase.db')
     c = db.cursor()
 except:
     pass
-# сегодняняя удалёнка
-async def dailyReport(message: types.Message):
+
+async def dailyReport():
     today = datetime.today().strftime('%Y-%m-%d')
     today += ' 00:00:00'
     distant_today = c.execute("SELECT Name FROM members WHERE ID IN (SELECT MemberID FROM distant WHERE DistantDate = ?)", (today,)).fetchall()
     distant_today_list = ''
+    daily_report = ''
+    daily_report = '#ЕжедневныйОтчёт \n' + str(datetime.today().strftime('%d.%m.%Y')) + '\n\n'
     if distant_today != []:
         for el in distant_today:
             distant_today_list += '📌 ' + str(el[0]) + '\n'
-        await message.answer("🏠 Сегодня удалёнка у: \n\n" + str(distant_today_list))
+        daily_report += "🏠 Сегодня удалёнка у: \n\n" + str(distant_today_list) + '\n'
     else:
-        await message.answer("Сегодня удалёнок ни у кого нет")
-# сегодняшние отпуска
-    todayVacationsAnswer = 'Сегодня в отпуске:\n\n'
+        daily_report += "🏠 Сегодня удалёнки ни у кого нет" + '\n\n'
+
+    sick_today = c.execute("SELECT members.Name, sick.isActive FROM members INNER JOIN sick ON members.ID = sick.MemberID WHERE sick.SickDate = ?", (today,)).fetchall()
+    if sick_today != []:
+        sick_today_str = ''
+        for i in sick_today:
+            if i[1] == 1:
+                sick_today_str += '📌 ' + i[0] + ' - работает из дома\n'
+            else:
+                sick_today_str += '📌 ' + i[0] + ' - не работает\n'
+        daily_report += "\n🤒 Сегодня болеют:\n\n" + sick_today_str + '\n'
+    else:
+        daily_report += "\n🤒 Сегодня никто не болеет\n\n"
+
     vacations = c.execute("SELECT * FROM vacation WHERE StartVacationDay <= ? AND EndVacationDay >= ?", (datetime.now(), datetime.now())).fetchall()
+    todayVacationsAnswer = ''
     if len(vacations) == 0:
-        await message.answer("В отпуске никого")
+        daily_report += "\n🌴 Сегодня в отпуске никого"
         return
     else:
         for vacation in vacations:
             memberName = c.execute("SELECT Name FROM members WHERE ID = ?", (vacation[0],)).fetchone()[0]
-            todayVacationsAnswer += memberName + '\n'
-        await message.answer(todayVacationsAnswer)
+            todayVacationsAnswer += '📌 ' + memberName + '\n'
+            daily_report += "\n🌴 Сегодня в отпуске:\n\n" + todayVacationsAnswer
 
-def register_handlers_daily(dp : Dispatcher):
-    dp.register_message_handler(dailyReport, commands = ['daily'])
+    await bot.send_message(superAdmin_ID, daily_report)

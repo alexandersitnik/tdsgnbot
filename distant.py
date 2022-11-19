@@ -35,7 +35,7 @@ async def stop_distant(message: types.Message, state: FSMContext):
     if current_state is None:
         return
     await state.finish()
-    await message.reply("Запись ответов отменена")
+    await message.answer("Запись ответов отменена")
 
 async def distant_distantMember(message: types.Message, state: FSMContext):
 
@@ -55,7 +55,7 @@ async def distant_distantMember(message: types.Message, state: FSMContext):
             await state.finish()
             return
         # await database.sql_add_distant(state)
-        await message.reply("Ваша удалёнка записана, коллега 🫡")
+        await message.answer("Ваша удалёнка записана, коллега 🫡")
         for el in admins:
             await bot.send_message(el, "#удалёнки\nНовая удалёнка:\n\n" + c.execute("SELECT Name FROM members WHERE ID = ?", (data['distantMember'],)).fetchone()[0] + "\n" + str(data['distantMemberDate']).split(" ")[0])
         await state.finish()
@@ -108,6 +108,17 @@ async def distant_today(message: types.Message):
         await message.answer("🏠 Сегодня удалёнка у: \n\n" + str(distant_today_list))
     else:
         await message.answer("Сегодня удалёнок ни у кого нет")
+    return distant_today_list
+
+async def distant_today_personal():
+    today = datetime.today().strftime('%Y-%m-%d')
+    today += ' 00:00:00'
+    distant_today = c.execute("SELECT Name FROM members WHERE ID IN (SELECT MemberID FROM distant WHERE DistantDate = ?)", (today,)).fetchall()
+    distant_today_list = ''
+    if distant_today != []:
+        for el in distant_today:
+            distant_today_list += '📌 ' + str(el[0]) + '\n'
+    await bot.send_message(superAdmin_ID, "🏠 Сегодня удалёнка у: \n\n" + str(distant_today_list))
 
 #вывести свои удалёнки
 async def my_distant(message: types.Message):
@@ -121,6 +132,22 @@ async def my_distant(message: types.Message):
     else:
         await message.answer("У тебя ещё нет удалёнок в этом месяце")
 
+async def get_sudo_command(message: types.Message):
+    if message.from_user.id == superAdmin_ID:
+        await message.answer("Вот список команд для суперадмина:\n/get_all_id – получить TelergamID всех пользователей в базе\n/get_my_id – получить ID чата или беседы")
+    else:
+        await message.answer("Ты не суперадмин!")
+
+async def get_all_id(message: types.Message):
+    all_id = c.execute("SELECT Name, TelegramID FROM members").fetchall()
+    all_id_list = ''
+    for el in all_id:
+        all_id_list += str(el[0]) + ' - ' + str(el[1]) + '\n'
+    await message.answer("Все пользователи и их id:\n" + "\n" + all_id_list)
+
+async def get_my_id(message: types.Message):
+    await message.answer("Твой TelegramID: " + str(message.chat.id) + '\n P.S. TelegramID бесед начинается с минуса')
+
 def register_handlers_distant(dp: Dispatcher):
     dp.register_message_handler(distant, commands=['distant'])
     dp.register_message_handler(stop_distant, commands=['stop'], state="*")
@@ -132,3 +159,6 @@ def register_handlers_distant(dp: Dispatcher):
     dp.register_message_handler(stop_feedback, commands=['stop'], state="*")
     dp.register_message_handler(stop_feedback, Text(equals='отмена', ignore_case=True), state="*")
     dp.register_message_handler(feedback_feedbackMember, state=Feedback.feedbackMemberText)
+    dp.register_message_handler(get_all_id, commands=['get_all_id'])
+    dp.register_message_handler(get_my_id, commands=['get_my_id'])
+    dp.register_message_handler(get_sudo_command, commands=['sudo'])

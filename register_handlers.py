@@ -7,10 +7,6 @@ admins = [265007461, 794933879]
 #тестирование
 translators = [265007461]
 
-async def send_members(message: types.Message):
-    format_members()
-    await message.answer("Members: " + format_members())
-
 async def help_command(message: types.Message):
     await message.answer("Вот какие команды ты можешь использовать:\n\n " + 
     "/help - вывести список команд\n" +
@@ -34,6 +30,5 @@ async def whatsnew(message: types.Message):
     await message.answer("v 1.1\nДобавлены команды /sick и /who_is_sick_today")
 
 def register_handlers(dp : Dispatcher):
-    dp.register_message_handler(send_members, commands = ['members'])
     dp.register_message_handler(help_command, commands = ['help'])
     dp.register_message_handler(whatsnew, commands = ['whats_new'])
