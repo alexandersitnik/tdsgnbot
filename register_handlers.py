@@ -21,7 +21,7 @@ async def help_command(message: types.Message):
     "/today_vacations - посмотреть кто сегодня в отпуске\n\n" + 
     "БОЛЬНИЧНЫЕ\n\n" + 
     "/sick – сообщить о своём больничном\n" +
-    "/who_is_sick_today – узнать кто сегодня на больничном\n" +  
+    "/who_is_sick_today – узнать кто сегодня на больничном\n\n" +  
     "/feedback - отправить обратную связь\n\n" +
     "/log_out - сбросить регистрацию\n\n" +
     "v 1.1")
