@@ -48,4 +48,4 @@ async def dailyReport():
             todayVacationsAnswer += '📌 ' + memberName + '\n'
             daily_report += "\n🌴 Сегодня в отпуске:\n\n" + todayVacationsAnswer
 
-    await bot.send_message(superAdmin_ID, daily_report)
+    await bot.send_message(-235938403, daily_report)

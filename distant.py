@@ -91,7 +91,7 @@ async def feedback_feedbackMember(message: types.Message, state: FSMContext):
                 await state.finish()
                 return
             # await database.sql_add_distant(state)
-            await message.reply("Ваше обращение очень важно для нас! Продолжайте пользоваться ботом!")
+            await message.reply("Ваше обращение очень важно для нас! Продолжайте пользоваться ботом!\n Я передал информацию @AlexanderSitnik")
             await state.finish()
 
 #----------------------------Выводы в клиентскую часть----------------------------------------------------
@@ -148,6 +148,16 @@ async def get_all_id(message: types.Message):
 async def get_my_id(message: types.Message):
     await message.answer("Твой TelegramID: " + str(message.chat.id) + '\n P.S. TelegramID бесед начинается с минуса')
 
+async def who_am_i(message: types.Message):
+    # получить информацию о пользователе: Name, Department, Grade, Birthday, Employment
+    try:
+        member_info = c.execute("SELECT Name, Grade, Birthday, Employment FROM members WHERE TelegramID = ?", (message.from_user.id,)).fetchall()
+        await message.answer("Твои данные:\n\n" + "Имя: " + str(member_info[0][0]) + "\n" + "Грейд: " + str(member_info[0][1]) + "\n" + "Дата рождения: " + str(member_info[0][2]) + "\n" + "Дата трудоустройства: " + str(member_info[0][3]) + '\n' + "\nP.S. Если что-то не так, напиши /feedback и сообщи об ошибке")   
+    except:
+        await message.answer("Ты не зарегистрирован в базе данных")
+        return
+
+
 def register_handlers_distant(dp: Dispatcher):
     dp.register_message_handler(distant, commands=['distant'])
     dp.register_message_handler(stop_distant, commands=['stop'], state="*")
@@ -162,3 +172,4 @@ def register_handlers_distant(dp: Dispatcher):
     dp.register_message_handler(get_all_id, commands=['get_all_id'])
     dp.register_message_handler(get_my_id, commands=['get_my_id'])
     dp.register_message_handler(get_sudo_command, commands=['sudo'])
+    dp.register_message_handler(who_am_i, commands=['who_am_i'])
