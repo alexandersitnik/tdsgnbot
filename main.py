@@ -21,6 +21,8 @@ async def send_test():
 
 logging.basicConfig(level=logging.INFO)
 
+#ребут
+
 async def on_startup(_):
     print('Бот запущен')
 register_handlers(dp)
