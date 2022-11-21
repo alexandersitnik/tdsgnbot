@@ -48,4 +48,7 @@ async def dailyReport():
             todayVacationsAnswer += '📌 ' + memberName + '\n'
             daily_report += "\n🌴 Сегодня в отпуске:\n\n" + todayVacationsAnswer
 
-    await bot.send_message(-235938403, daily_report)
+    await bot.send_message(-1001609367400, daily_report)
+
+def register_handlers_daily(dp: Dispatcher):
+    dp.register_message_handler(dailyReport, commands=['daily'])
