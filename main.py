@@ -5,7 +5,7 @@ from aiogram import Bot, Dispatcher, executor, types
 from create_bot import bot
 from checkpoint import register_handlers_check
 from create_bot import dp, Bot
-from daily import dailyReport, register_handlers_daily
+from daily import dailyReport
 from deseption import register_handlers_deception
 from register_handlers import register_handlers
 from keyboards.registration_kb import register_handlers_members_kb
@@ -32,9 +32,8 @@ register_handlers_members_kb(dp)
 register_handlers_distant(dp)
 register_handlers_vacation(dp)
 register_handlers_sick(dp)
-register_handlers_daily(dp)
 
 if __name__ == '__main__':
     scheduler.add_to_loop()
-    scheduler.add_job(Job('send_daily', dailyReport, None, Periods.minute, 1440, '21.11.22 10:35'))
+    scheduler.add_job(Job('send_daily', dailyReport, None, Periods.minute, 1440, '21.11.22 11:50'))
     executor.start_polling(dp, skip_updates=True, on_startup=on_startup)

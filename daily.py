@@ -41,14 +41,9 @@ async def dailyReport():
     todayVacationsAnswer = ''
     if len(vacations) == 0:
         daily_report += "\n🌴 Сегодня в отпуске никого"
-        return
     else:
         for vacation in vacations:
             memberName = c.execute("SELECT Name FROM members WHERE ID = ?", (vacation[0],)).fetchone()[0]
             todayVacationsAnswer += '📌 ' + memberName + '\n'
             daily_report += "\n🌴 Сегодня в отпуске:\n\n" + todayVacationsAnswer
-
-    await bot.send_message(265007461, daily_report)
-
-def register_handlers_daily(dp: Dispatcher):
-    dp.register_message_handler(dailyReport, commands=['daily'])
+    await bot.send_message(-235938403, daily_report)
