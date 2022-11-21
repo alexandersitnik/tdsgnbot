@@ -158,6 +158,9 @@ async def who_am_i(message: types.Message):
         return
 
 
+async def what_time_is_it(message: types.Message):
+    await bot.send_message(message.from_user.id, "Сейчас " + str(datetime.now().strftime('%H:%M:%S')))
+
 def register_handlers_distant(dp: Dispatcher):
     dp.register_message_handler(distant, commands=['distant'])
     dp.register_message_handler(stop_distant, commands=['stop'], state="*")
@@ -173,3 +176,4 @@ def register_handlers_distant(dp: Dispatcher):
     dp.register_message_handler(get_my_id, commands=['get_my_id'])
     dp.register_message_handler(get_sudo_command, commands=['sudo'])
     dp.register_message_handler(who_am_i, commands=['who_am_i'])
+    dp.register_message_handler(what_time_is_it, commands=['time'])
