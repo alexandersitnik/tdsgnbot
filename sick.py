@@ -19,13 +19,16 @@ class Sick(StatesGroup):
     isActive = State()
 
 async def sick(message: types.Message, state: FSMContext):
-    await Sick.MemberID.set()
-    memberName = c.execute("SELECT Name FROM members WHERE TelegramID = ?", (message.from_user.id,)).fetchone()[0]
-    await message.answer("Начинаю процедуру записи больничного 🤒\n\nТы идентифицирован как: " + memberName + ".\n\n Если это не ты или просто хочешь остановить запись, то напиши /stop или «отмена»")
-    async with state.proxy() as data:
-        data['MemberID'] = c.execute("SELECT ID FROM members WHERE TelegramID = ?", (message.from_user.id,)).fetchone()[0]
-    await Sick.next()
-    await message.answer("Введи дату начала больничного в формате ДД.ММ.ГГГГ")
+    if (message.chat.type == 'private'):
+        await Sick.MemberID.set()
+        memberName = c.execute("SELECT Name FROM members WHERE TelegramID = ?", (message.from_user.id,)).fetchone()[0]
+        await message.answer("Начинаю процедуру записи больничного 🤒\n\nТы идентифицирован как: " + memberName + ".\n\n Если это не ты или просто хочешь остановить запись, то напиши /stop или «отмена»")
+        async with state.proxy() as data:
+            data['MemberID'] = c.execute("SELECT ID FROM members WHERE TelegramID = ?", (message.from_user.id,)).fetchone()[0]
+        await Sick.next()
+        await message.answer("Введи дату начала больничного в формате ДД.ММ.ГГГГ")
+    else:
+        await message.answer("Эта команда доступна только в личных сообщениях")
 
 async def stop_sick(message: types.Message, state: FSMContext):
     current_state = await state.get_state()

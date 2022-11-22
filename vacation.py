@@ -19,13 +19,16 @@ class Vacations(StatesGroup):
     vacationIsPaid = State()
 
 async def vacation(message: types.Message, state: FSMContext):
-    await Vacations.vacationMember.set()
-    memberName = c.execute("SELECT Name FROM members WHERE TelegramID = ?", (message.from_user.id,)).fetchone()[0]
-    await message.answer("Начинаю процедуру записи отпуска 🧐\n\nТы идентифицирован как: " + memberName + ".\n\n Если это не ты или просто хочешь остановить запись, то напиши /stop или «отмена»")
-    async with state.proxy() as data:
-        data['vacationMember'] = c.execute("SELECT ID FROM members WHERE TelegramID = ?", (message.from_user.id,)).fetchone()[0]
-    await Vacations.next()
-    await message.answer("Введи дату отпуска в формате ДД.ММ.ГГГГ")
+    if (message.chat.type == 'private'):
+        await Vacations.vacationMember.set()
+        memberName = c.execute("SELECT Name FROM members WHERE TelegramID = ?", (message.from_user.id,)).fetchone()[0]
+        await message.answer("Начинаю процедуру записи отпуска 🧐\n\nТы идентифицирован как: " + memberName + ".\n\n Если это не ты или просто хочешь остановить запись, то напиши /stop или «отмена»")
+        async with state.proxy() as data:
+            data['vacationMember'] = c.execute("SELECT ID FROM members WHERE TelegramID = ?", (message.from_user.id,)).fetchone()[0]
+        await Vacations.next()
+        await message.answer("Введи дату отпуска в формате ДД.ММ.ГГГГ")
+    else:
+        await message.answer("Команда доступна только в личных сообщениях")
 
 async def stop_vacation(message: types.Message, state: FSMContext):
     current_state = await state.get_state()

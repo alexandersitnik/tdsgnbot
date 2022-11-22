@@ -25,10 +25,10 @@ async def help_command(message: types.Message):
     "/who_is_sick_today – узнать кто сегодня на больничном\n\n" +  
     "/feedback - отправить обратную связь\n\n" +
     "/log_out - сбросить регистрацию\n\n" +
-    "v 1.1")
+    "v 1.2")
 
 async def whatsnew(message: types.Message):
-    await message.answer("v 1.1\nДобавлены команды /sick и /who_is_sick_today")
+    await message.answer("v1.2\nВ этой версии добавлены ежедневные отчёты, бота теперь можно добавлять в чаты\n\nv 1.1\nДобавлены команды /sick и /who_is_sick_today")
 
 async def get_db_command(message: types.Message):
     if (message.chat.type == 'private' and message.from_id == 265007461):

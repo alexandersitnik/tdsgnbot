@@ -22,13 +22,16 @@ class Distants(StatesGroup):
     distantMemberDate = State()
 
 async def distant(message: types.Message, state: FSMContext):
-    await Distants.distantMember.set()
-    memberName = c.execute("SELECT Name FROM members WHERE TelegramID = ?", (message.from_user.id,)).fetchone()[0]
-    await message.answer("Начинаю процедуру записи удалёнки 🧐\n\nТы идентифицирован как: " + memberName + ".\n\n Если это не ты или просто хочешь остановить запись, то напиши /stop или «отмена»")
-    async with state.proxy() as data:
-        data['distantMember'] = c.execute("SELECT ID FROM members WHERE TelegramID = ?", (message.from_user.id,)).fetchone()[0]
-    await Distants.next()
-    await message.answer("Введи дату удалёнки в формате ДД.ММ.ГГГГ")
+    if (message.chat.type == 'private'):
+        await Distants.distantMember.set()
+        memberName = c.execute("SELECT Name FROM members WHERE TelegramID = ?", (message.from_user.id,)).fetchone()[0]
+        await message.answer("Начинаю процедуру записи удалёнки 🧐\n\nТы идентифицирован как: " + memberName + ".\n\n Если это не ты или просто хочешь остановить запись, то напиши /stop или «отмена»")
+        async with state.proxy() as data:
+            data['distantMember'] = c.execute("SELECT ID FROM members WHERE TelegramID = ?", (message.from_user.id,)).fetchone()[0]
+        await Distants.next()
+        await message.answer("Введи дату удалёнки в формате ДД.ММ.ГГГГ")
+    else:
+        await message.answer("Эта команда доступна только в личных сообщениях")
 
 async def stop_distant(message: types.Message, state: FSMContext):
     current_state = await state.get_state()
@@ -65,13 +68,16 @@ class Feedback(StatesGroup):
     feedbackMemberText = State()
 
 async def feedback(message: types.Message, state: FSMContext):
-    await Feedback.feedbackMember.set()
-    memberName = c.execute("SELECT Name FROM members WHERE TelegramID = ?", (message.from_user.id,)).fetchone()[0]
-    await message.answer("Ох... Наверное что-то работает не так, как надо... Хотя... Может ты хочешь написать положительный отзыв? 🧐\n\nТы идентифицирован как: " + memberName + ".\n\n Если это не ты или просто хочешь остановить запись, то напиши /stop или «отмена»")
-    async with state.proxy() as data:
-        data['feedbackMember'] = c.execute("SELECT ID FROM members WHERE TelegramID = ?", (message.from_user.id,)).fetchone()[0]
-    await Feedback.next()
-    await message.answer("Введи текст обратной связи: ")
+    if (message.chat.type == 'private'):
+        await Feedback.feedbackMember.set()
+        memberName = c.execute("SELECT Name FROM members WHERE TelegramID = ?", (message.from_user.id,)).fetchone()[0]
+        await message.answer("Ох... Наверное что-то работает не так, как надо... Хотя... Может ты хочешь написать положительный отзыв? 🧐\n\nТы идентифицирован как: " + memberName + ".\n\n Если это не ты или просто хочешь остановить запись, то напиши /stop или «отмена»")
+        async with state.proxy() as data:
+            data['feedbackMember'] = c.execute("SELECT ID FROM members WHERE TelegramID = ?", (message.from_user.id,)).fetchone()[0]
+        await Feedback.next()
+        await message.answer("Введи текст обратной связи: ")
+    else:
+        await message.answer("Эта команда доступна только в личных сообщениях")
 
 async def stop_feedback(message: types.Message, state: FSMContext):
     current_state = await state.get_state()
