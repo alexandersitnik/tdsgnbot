@@ -104,7 +104,9 @@ async def my_vacations(message: types.Message, state: FSMContext):
 # вывести есть ли на сегодня у кого-то отпуск
 async def today_vacations(message: types.Message):
     todayVacationsAnswer = 'Сегодня в отпуске:\n\n'
-    vacations = c.execute("SELECT * FROM vacation WHERE StartVacationDay <= ? AND EndVacationDay >= ?", (datetime.now(), datetime.now())).fetchall()
+    todaydate = datetime.now()
+    todaydate= todaydate.replace(hour=0, minute=0, second=0, microsecond=0)
+    vacations = c.execute("SELECT * FROM vacation WHERE StartVacationDay <= ? AND EndVacationDay >= ?", (todaydate, todaydate)).fetchall()
     if len(vacations) == 0:
         await message.answer("В отпуске никого")
         return
@@ -113,6 +115,7 @@ async def today_vacations(message: types.Message):
             memberName = c.execute("SELECT Name FROM members WHERE ID = ?", (vacation[0],)).fetchone()[0]
             todayVacationsAnswer += memberName + '\n'
         await message.answer(todayVacationsAnswer)
+        
 
 
 def register_handlers_vacation(dp: Dispatcher):

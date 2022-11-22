@@ -134,7 +134,7 @@ async def my_distant(message: types.Message):
 
 async def get_sudo_command(message: types.Message):
     if message.from_user.id == superAdmin_ID:
-        await message.answer("Вот список команд для суперадмина:\n/get_all_id – получить TelergamID всех пользователей в базе\n/get_my_id – получить ID чата или беседы")
+        await message.answer("Вот список команд для суперадмина:\n/get_all_id – получить TelergamID всех пользователей в базе\n/get_my_id – получить ID чата или беседы\n/get_db – получить файл базы данных")
     else:
         await message.answer("Ты не суперадмин!")
 

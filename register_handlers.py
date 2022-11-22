@@ -1,5 +1,6 @@
 from aiogram import types, Dispatcher
 from database import format_members
+from aiogram.types import InputFile
 
 #группы пользователей
 #администраторы
@@ -29,6 +30,16 @@ async def help_command(message: types.Message):
 async def whatsnew(message: types.Message):
     await message.answer("v 1.1\nДобавлены команды /sick и /who_is_sick_today")
 
+async def get_db_command(message: types.Message):
+    if (message.chat.type == 'private' and message.from_id == 265007461):
+        date_str = 'BD'
+        filename = f'{date_str}.db'
+        db_file = InputFile('./data/tdsgnBotBase.db', filename=filename)
+        await message.answer_document(document=db_file, caption='Файл базы данных.')
+    else:
+        await message.answer('Команда доступна только администраторам.')
+
 def register_handlers(dp : Dispatcher):
     dp.register_message_handler(help_command, commands = ['help'])
     dp.register_message_handler(whatsnew, commands = ['whats_new'])
+    dp.register_message_handler(get_db_command, commands = ['get_db'])
