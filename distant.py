@@ -145,11 +145,14 @@ async def get_sudo_command(message: types.Message):
         await message.answer("Ты не суперадмин!")
 
 async def get_all_id(message: types.Message):
-    all_id = c.execute("SELECT Name, TelegramID FROM members").fetchall()
-    all_id_list = ''
-    for el in all_id:
-        all_id_list += str(el[0]) + ' - ' + str(el[1]) + '\n'
-    await message.answer("Все пользователи и их id:\n" + "\n" + all_id_list)
+    if message.from_user.id == superAdmin_ID:
+        all_id = c.execute("SELECT Name, TelegramID FROM members").fetchall()
+        all_id_list = ''
+        for el in all_id:
+            all_id_list += str(el[0]) + ' - ' + str(el[1]) + '\n'
+        await message.answer("Все пользователи и их id:\n" + "\n" + all_id_list)
+    else:
+        await message.answer("Ты не суперадмин!")
 
 async def get_my_id(message: types.Message):
     await message.answer("Твой TelegramID: " + str(message.chat.id) + '\n P.S. TelegramID бесед начинается с минуса')
