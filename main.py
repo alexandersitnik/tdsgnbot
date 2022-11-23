@@ -3,7 +3,7 @@ import asyncio
 import os, hashlib
 from async_scheduler import AsyncScheduler, Job, Periods
 from aiogram import Bot, Dispatcher, executor, types
-from aiogram.types import InputTextMessageContent, InlineQueryResultArticle
+from aiogram.types import InputTextMessageContent, InlineQueryResultArticle, InlineQuery
 from create_bot import bot
 from checkpoint import register_handlers_check
 from create_bot import dp, Bot

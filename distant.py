@@ -177,15 +177,15 @@ async def cocksize(message: types.Message):
     epithet = random.choice(epithets)
     if cocksize_len >=1 and cocksize_len <= 5:
         await message.answer("#хештегчтобыолебылопрощесобратьстатистику\nТвой размер " + str(epithet) + ': ' + str(cocksize_len) + " см 🫣")
-    if cocksize_len >=6 and cocksize_len <=10:
+    elif cocksize_len >=6 and cocksize_len <=10:
         await message.answer("#хештегчтобыолебылопрощесобратьстатистику\nТвой размер " + str(epithet) + ': ' + str(cocksize_len) + " см 🧐")
-    if cocksize_len >=11 and cocksize_len <=15:
+    elif cocksize_len >=11 and cocksize_len <=15:
         await message.answer("#хештегчтобыолебылопрощесобратьстатистику\nТвой размер " + str(epithet) + ': ' + str(cocksize_len) + " см 🙂")
-    if cocksize_len >=16 and cocksize_len <=20:
+    elif cocksize_len >=16 and cocksize_len <=20:
         await message.answer("#хештегчтобыолебылопрощесобратьстатистику\nТвой размер " + str(epithet) + ': ' + str(cocksize_len) + " см 😏")
-    if cocksize_len >=21 and cocksize_len <=25:
+    elif cocksize_len >=21 and cocksize_len <=25:
         await message.answer("#хештегчтобыолебылопрощесобратьстатистику\nТвой размер " + str(epithet) + ': ' + str(cocksize_len) + " см 😳")
-    if cocksize_len >=26 and cocksize_len <=30:
+    elif cocksize_len >=26 and cocksize_len <=30:
         await message.answer("#хештегчтобыолебылопрощесобратьстатистику\nТвой размер " + str(epithet) + ': ' + str(cocksize_len) + " см 🤯")
 
 def register_handlers_distant(dp: Dispatcher):
