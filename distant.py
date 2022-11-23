@@ -1,3 +1,4 @@
+import random
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import State, StatesGroup
 from aiogram import types, Dispatcher
@@ -166,9 +167,26 @@ async def who_am_i(message: types.Message):
         await message.answer("Ты не зарегистрирован в базе данных")
         return
 
-
 async def what_time_is_it(message: types.Message):
     await bot.send_message(message.from_user.id, "Сейчас " + str(datetime.now().strftime('%H:%M:%S')))
+
+async def cocksize(message: types.Message):
+    cocksize_len = random.randint(1, 40)
+    cocksize_girth = random.randint(0, 15)
+    epithets = ['членохера', 'пипки', 'достоинства', 'хрена', 'шишки','болта','сморчка','убивца','писюна','агрегата','елдака']
+    epithet = random.choice(epithets)
+    if cocksize_len >=1 and cocksize_len <= 5:
+        await message.answer("#хештегчтобыолебылопрощесобратьстатистику\nТвой размер " + str(epithet) + ': ' + str(cocksize_len) + " см 🫣")
+    if cocksize_len >=6 and cocksize_len <=10:
+        await message.answer("#хештегчтобыолебылопрощесобратьстатистику\nТвой размер " + str(epithet) + ': ' + str(cocksize_len) + " см 🧐")
+    if cocksize_len >=11 and cocksize_len <=15:
+        await message.answer("#хештегчтобыолебылопрощесобратьстатистику\nТвой размер " + str(epithet) + ': ' + str(cocksize_len) + " см 🙂")
+    if cocksize_len >=16 and cocksize_len <=20:
+        await message.answer("#хештегчтобыолебылопрощесобратьстатистику\nТвой размер " + str(epithet) + ': ' + str(cocksize_len) + " см 😏")
+    if cocksize_len >=21 and cocksize_len <=25:
+        await message.answer("#хештегчтобыолебылопрощесобратьстатистику\nТвой размер " + str(epithet) + ': ' + str(cocksize_len) + " см 😳")
+    if cocksize_len >=26 and cocksize_len <=30:
+        await message.answer("#хештегчтобыолебылопрощесобратьстатистику\nТвой размер " + str(epithet) + ': ' + str(cocksize_len) + " см 🤯")
 
 def register_handlers_distant(dp: Dispatcher):
     dp.register_message_handler(distant, commands=['distant'])
@@ -186,3 +204,4 @@ def register_handlers_distant(dp: Dispatcher):
     dp.register_message_handler(get_sudo_command, commands=['sudo'])
     dp.register_message_handler(who_am_i, commands=['who_am_i'])
     dp.register_message_handler(what_time_is_it, commands=['time'])
+    dp.register_message_handler(cocksize, commands=['cocksize'])

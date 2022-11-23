@@ -1,7 +1,9 @@
 import logging
 import asyncio
+import os, hashlib
 from async_scheduler import AsyncScheduler, Job, Periods
 from aiogram import Bot, Dispatcher, executor, types
+from aiogram.types import InputTextMessageContent, InlineQueryResultArticle
 from create_bot import bot
 from checkpoint import register_handlers_check
 from create_bot import dp, Bot
@@ -20,8 +22,6 @@ async def send_test():
 
 
 logging.basicConfig(level=logging.INFO)
-
-#ребут
 
 async def on_startup(_):
     print('Бот запущен')
