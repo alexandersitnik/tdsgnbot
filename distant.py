@@ -123,8 +123,8 @@ async def distant_today_personal():
     distant_today_list = ''
     if distant_today != []:
         for el in distant_today:
-            distant_today_list += '📌 ' + str(el[0]) + '\n'
-    await bot.send_message(superAdmin_ID, "🏠 Сегодня удалёнка у: \n\n" + str(distant_today_list))
+            distant_today_list += '– ' + str(el[0]) + '\n'
+    await bot.send_message(superAdmin_ID, "Сегодня удалёнка у: \n\n" + str(distant_today_list))
 
 #вывести свои удалёнки
 async def my_distant(message: types.Message):

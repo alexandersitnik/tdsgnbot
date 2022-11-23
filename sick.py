@@ -61,7 +61,7 @@ async def sick_is_active(message: types.Message, state: FSMContext):
     try:
         c.execute("INSERT INTO sick (MemberID, SickDate, isActive) VALUES (?, ?, ?)", (data['MemberID'], data['SickDate'], data['isActive']))
         db.commit()
-        await message.answer("Запись больничного прошла успешно\n Поправляйся☀️\n\n Если вечером поймешь, что завтра не выйдешь на работу, то заполни еще один день /sick. Да-да и так каждый день, что поделать 🤷‍♂️")
+        await message.answer("Запись больничного прошла успешно\n Поправляйся☀️\n\n Если вечером поймешь, что завтра не выйдешь на работу, то заполни еще один день /sick. Да-да и так каждый день, что поделать ")
         for el in admins:
             await bot.send_message(el, "#больничные\n\n Дата: " + str(data['SickDate']).split(" ")[0] + "\n" + "Кто: " + c.execute("SELECT Name FROM members WHERE TelegramID = ?", (message.from_user.id,)).fetchone()[0] + "\n" + "Будет работать из дома: " + str(data['isActive']) + "\n\n P.S. 1 - работает из дома, 0 - нет")
         await state.finish()
