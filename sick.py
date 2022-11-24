@@ -82,9 +82,9 @@ async def who_is_sick_today(message: types.Message):
                 sick_today_str += i[0] + ' - работает из дома\n'
             else:
                 sick_today_str += i[0] + ' - не работает\n'
-        await message.answer("Сегодня болеют:\n" + sick_today_str)
+        await message.answer("*Сегодня болеют:*\n" + sick_today_str, parse_mode= 'Markdown')
     else:
-        await message.answer("Сегодня никто не болеет")
+        await message.answer("*Сегодня никто не болеет*", parse_mode= 'Markdown')
 
 
 

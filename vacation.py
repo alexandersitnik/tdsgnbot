@@ -111,7 +111,7 @@ async def today_vacations(message: types.Message):
     todaydate= todaydate.replace(hour=0, minute=0, second=0, microsecond=0)
     vacations = c.execute("SELECT * FROM vacation WHERE StartVacationDay <= ? AND EndVacationDay >= ?", (todaydate, todaydate)).fetchall()
     if len(vacations) == 0:
-        await message.answer("В отпуске никого")
+        await message.answer("*В отпуске никого*", parse_mode= 'Markdown')
         return
     else:
         for vacation in vacations:

@@ -112,10 +112,10 @@ async def distant_today(message: types.Message):
     distant_today_list = ''
     if distant_today != []:
         for el in distant_today:
-            distant_today_list += '📌 ' + str(el[0]) + '\n'
-        await message.answer("🏠 Сегодня удалёнка у: \n\n" + str(distant_today_list))
+            distant_today_list += '– ' + str(el[0]) + '\n'
+        await message.answer("*Сегодня удалёнка у:* \n\n" + str(distant_today_list), parse_mode= 'Markdown')
     else:
-        await message.answer("Сегодня удалёнок ни у кого нет")
+        await message.answer("*Сегодня удалёнок ни у кого нет*", parse_mode= 'Markdown')
     return distant_today_list
 
 async def distant_today_personal():
