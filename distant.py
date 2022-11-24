@@ -9,6 +9,7 @@ from register_handlers import admins
 import sqlite3
 
 superAdmin_ID = 265007461
+epithets = ['членохера', 'пипки', 'достоинства', 'хрена', 'шишки','болта','сморчка','убивца','писюна','агрегата','елдака']
 
 try:
     db = sqlite3.connect('./data/tdsgnBotBase.db')
@@ -172,21 +173,49 @@ async def what_time_is_it(message: types.Message):
 
 async def cocksize(message: types.Message):
     cocksize_len = random.randint(1, 40)
-    cocksize_girth = random.randint(0, 15)
-    epithets = ['членохера', 'пипки', 'достоинства', 'хрена', 'шишки','болта','сморчка','убивца','писюна','агрегата','елдака']
     epithet = random.choice(epithets)
     if cocksize_len >=1 and cocksize_len <= 5:
-        await message.answer("#хештегчтобыолебылопрощесобратьстатистику\nТвой размер " + str(epithet) + ': ' + str(cocksize_len) + " см 🫣")
+        try:
+            await message.answer("Твой размер " + str(epithet) + ': ' + str(cocksize_len) + " см 🫣")
+        except:
+            await message.answer("С первого раза не разглядел. Наверное тут слишком холодно.\nПопробуй ещё раз /cocksize") 
     elif cocksize_len >=6 and cocksize_len <=10:
-        await message.answer("#хештегчтобыолебылопрощесобратьстатистику\nТвой размер " + str(epithet) + ': ' + str(cocksize_len) + " см 🧐")
+        try:
+            await message.answer("Твой размер " + str(epithet) + ': ' + str(cocksize_len) + " см 🧐")
+        except:
+            await message.answer("С первого раза не разглядел. Наверное тут слишком холодно.\nПопробуй ещё раз /cocksize")
     elif cocksize_len >=11 and cocksize_len <=15:
-        await message.answer("#хештегчтобыолебылопрощесобратьстатистику\nТвой размер " + str(epithet) + ': ' + str(cocksize_len) + " см 🙂")
+        try:
+            await message.answer("Твой размер " + str(epithet) + ': ' + str(cocksize_len) + " см 🙂")
+        except:
+            await message.answer("С первого раза не разглядел. Наверное тут слишком холодно.\nПопробуй ещё раз /cocksize")
     elif cocksize_len >=16 and cocksize_len <=20:
-        await message.answer("#хештегчтобыолебылопрощесобратьстатистику\nТвой размер " + str(epithet) + ': ' + str(cocksize_len) + " см 😏")
+        try:
+            await message.answer("Твой размер " + str(epithet) + ': ' + str(cocksize_len) + " см 😏")
+        except:
+            await message.answer("С первого раза не разглядел. Наверное тут слишком холодно.\nПопробуй ещё раз /cocksize")
     elif cocksize_len >=21 and cocksize_len <=25:
-        await message.answer("#хештегчтобыолебылопрощесобратьстатистику\nТвой размер " + str(epithet) + ': ' + str(cocksize_len) + " см 😳")
+        try:
+            await message.answer("Твой размер " + str(epithet) + ': ' + str(cocksize_len) + " см 😳")
+        except:
+            await message.answer("С первого раза не разглядел. Наверное тут слишком холодно.\nПопробуй ещё раз /cocksize")
     elif cocksize_len >=26 and cocksize_len <=30:
-        await message.answer("#хештегчтобыолебылопрощесобратьстатистику\nТвой размер " + str(epithet) + ': ' + str(cocksize_len) + " см 🤯")
+        try:
+            await message.answer("Твой размер " + str(epithet) + ': ' + str(cocksize_len) + " см 🤯")
+        except:
+            await message.answer("С первого раза не разглядел. Наверное тут слишком холодно.\nПопробуй ещё раз /cocksize")
+    elif cocksize_len >=31 and cocksize_len <=35:
+        try:
+            await message.answer("Твой размер " + str(epithet) + ': ' + str(cocksize_len) + " см 😱")
+        except:
+            await message.answer("С первого раза не разглядел. Наверное тут слишком холодно.\nПопробуй ещё раз /cocksize")
+    elif cocksize_len >=36 and cocksize_len <=40:
+        try:
+            await message.answer("Твой размер " + str(epithet) + ': ' + str(cocksize_len) + " см 😵")
+        except:
+            await message.answer("С первого раза не разглядел. Наверное тут слишком холодно.\nПопробуй ещё раз /cocksize")
+    else:
+        await message.answer("С первого раза не разглядел. Наверное тут слишком холодно.\nПопробуй ещё раз /cocksize" + str(cocksize_len))
 
 def register_handlers_distant(dp: Dispatcher):
     dp.register_message_handler(distant, commands=['distant'])
