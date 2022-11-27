@@ -140,6 +140,15 @@ async def my_distant(message: types.Message):
     else:
         await message.answer("У тебя ещё нет удалёнок в этом месяце")
 
+#по нажатию на команду из базы данных удаляется последняя удаленка пользователя
+async def delete_distant(message: types.Message):
+    try:
+        c.execute("DELETE FROM distant WHERE MemberID IN (SELECT ID FROM members WHERE TelegramID = ?) AND DistantDate IN (SELECT MAX(DistantDate) FROM distant WHERE MemberID IN (SELECT ID FROM members WHERE TelegramID = ?))", (message.from_user.id, message.from_user.id))
+        db.commit()
+        await message.answer("Последняя запись о удаленой работе удалена")
+    except:
+        await message.answer("Удалёнки нет")
+
 async def get_sudo_command(message: types.Message):
     if message.from_user.id == superAdmin_ID:
         await message.answer("Вот список команд для суперадмина:\n/get_all_id – получить TelergamID всех пользователей в базе\n/get_my_id – получить ID чата или беседы\n/get_db – получить файл базы данных")
@@ -234,3 +243,4 @@ def register_handlers_distant(dp: Dispatcher):
     dp.register_message_handler(who_am_i, commands=['who_am_i'])
     dp.register_message_handler(what_time_is_it, commands=['time'])
     dp.register_message_handler(cocksize, commands=['cocksize'])
+    dp.register_message_handler(delete_distant, commands=['delete_last_distant'])
