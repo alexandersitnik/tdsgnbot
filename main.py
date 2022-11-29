@@ -9,6 +9,7 @@ from checkpoint import register_handlers_check
 from create_bot import dp, Bot
 from daily import dailyReport
 from deseption import register_handlers_deception
+from geshtimer import register_handlers_gesh
 from register_handlers import register_handlers
 from keyboards.registration_kb import register_handlers_members_kb
 from distant import register_handlers_distant, distant_today_personal
@@ -34,6 +35,7 @@ register_handlers_distant(dp)
 register_handlers_vacation(dp)
 register_handlers_sick(dp)
 register_handlers_inline(dp)
+register_handlers_gesh(dp)
 if __name__ == '__main__':
     scheduler.add_to_loop()
     scheduler.add_job(Job('send_daily', dailyReport, None, Periods.minute, 1440, '30.11.22 11:30'))
