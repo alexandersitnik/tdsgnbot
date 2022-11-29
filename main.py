@@ -14,6 +14,7 @@ from keyboards.registration_kb import register_handlers_members_kb
 from distant import register_handlers_distant, distant_today_personal
 from sick import register_handlers_sick
 from vacation import register_handlers_vacation
+from echo import register_handlers_inline
 
 scheduler = AsyncScheduler([])
 
@@ -32,8 +33,8 @@ register_handlers_members_kb(dp)
 register_handlers_distant(dp)
 register_handlers_vacation(dp)
 register_handlers_sick(dp)
-
+register_handlers_inline(dp)
 if __name__ == '__main__':
     scheduler.add_to_loop()
-    scheduler.add_job(Job('send_daily', dailyReport, None, Periods.minute, 1440, '28.11.22 10:00'))
+    scheduler.add_job(Job('send_daily', dailyReport, None, Periods.minute, 1440, '29.11.22 12:00'))
     executor.start_polling(dp, skip_updates=True, on_startup=on_startup)

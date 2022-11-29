@@ -21,7 +21,7 @@ async def dailyReport():
     if distant_today != []:
         for el in distant_today:
             distant_today_list += '— ' + str(el[0]) + '\n'
-        daily_report += "*Сегодня удалёнка у:* \n\n" + str(distant_today_list) + '\n'
+        daily_report += "*Сегодня удалёнка у:* \n" + str(distant_today_list) + '\n'
     else:
         daily_report += "*Сегодня удалёнки ни у кого нет*" + '\n\n'
 
@@ -33,7 +33,7 @@ async def dailyReport():
                 sick_today_str += '— ' + i[0] + ' - работает из дома\n'
             else:
                 sick_today_str += '— ' + i[0] + ' - не работает\n'
-        daily_report += "\n*Сегодня болеют:*\n\n" + sick_today_str + '\n'
+        daily_report += "\n*Сегодня болеют:*\n" + sick_today_str + '\n'
     else:
         daily_report += "\n*Сегодня никто не болеет*\n\n"
 
@@ -45,6 +45,6 @@ async def dailyReport():
         for vacation in vacations:
             memberName = c.execute("SELECT Name FROM members WHERE ID = ?", (vacation[0],)).fetchone()[0]
             todayVacationsAnswer += '— ' + memberName + '\n'
-            daily_report += "\n*Сегодня в отпуске*:\n\n" + todayVacationsAnswer
+            daily_report += "\n*Сегодня в отпуске*:\n" + todayVacationsAnswer
     await bot.send_message(-235938403, daily_report, parse_mode='Markdown')
     await bot.send_message(-1001723462410, daily_report, parse_mode='Markdown')
