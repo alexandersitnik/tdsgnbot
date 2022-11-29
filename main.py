@@ -36,5 +36,5 @@ register_handlers_sick(dp)
 register_handlers_inline(dp)
 if __name__ == '__main__':
     scheduler.add_to_loop()
-    scheduler.add_job(Job('send_daily', dailyReport, None, Periods.minute, 1440, '29.11.22 12:00'))
+    scheduler.add_job(Job('send_daily', dailyReport, None, Periods.minute, 1440, '30.11.22 11:30'))
     executor.start_polling(dp, skip_updates=True, on_startup=on_startup)
