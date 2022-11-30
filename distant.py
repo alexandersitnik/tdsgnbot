@@ -181,50 +181,7 @@ async def what_time_is_it(message: types.Message):
     await bot.send_message(message.from_user.id, "Сейчас " + str(datetime.now().strftime('%H:%M:%S')))
 
 async def cocksize(message: types.Message):
-    cocksize_len = random.randint(1, 40)
-    epithet = random.choice(epithets)
-    if cocksize_len >=1 and cocksize_len <= 5:
-        try:
-            await message.answer("Твой размер " + str(epithet) + ': ' + str(cocksize_len) + " см 🫣")
-        except:
-            await message.answer("С первого раза не разглядел. Наверное тут слишком холодно.\nПопробуй ещё раз /cocksize") 
-    elif cocksize_len >=6 and cocksize_len <=10:
-        try:
-            await message.answer("Твой размер " + str(epithet) + ': ' + str(cocksize_len) + " см 🧐")
-        except:
-            await message.answer("С первого раза не разглядел. Наверное тут слишком холодно.\nПопробуй ещё раз /cocksize")
-    elif cocksize_len >=11 and cocksize_len <=15:
-        try:
-            await message.answer("Твой размер " + str(epithet) + ': ' + str(cocksize_len) + " см 🙂")
-        except:
-            await message.answer("С первого раза не разглядел. Наверное тут слишком холодно.\nПопробуй ещё раз /cocksize")
-    elif cocksize_len >=16 and cocksize_len <=20:
-        try:
-            await message.answer("Твой размер " + str(epithet) + ': ' + str(cocksize_len) + " см 😏")
-        except:
-            await message.answer("С первого раза не разглядел. Наверное тут слишком холодно.\nПопробуй ещё раз /cocksize")
-    elif cocksize_len >=21 and cocksize_len <=25:
-        try:
-            await message.answer("Твой размер " + str(epithet) + ': ' + str(cocksize_len) + " см 😳")
-        except:
-            await message.answer("С первого раза не разглядел. Наверное тут слишком холодно.\nПопробуй ещё раз /cocksize")
-    elif cocksize_len >=26 and cocksize_len <=30:
-        try:
-            await message.answer("Твой размер " + str(epithet) + ': ' + str(cocksize_len) + " см 🤯")
-        except:
-            await message.answer("С первого раза не разглядел. Наверное тут слишком холодно.\nПопробуй ещё раз /cocksize")
-    elif cocksize_len >=31 and cocksize_len <=35:
-        try:
-            await message.answer("Твой размер " + str(epithet) + ': ' + str(cocksize_len) + " см 😱")
-        except:
-            await message.answer("С первого раза не разглядел. Наверное тут слишком холодно.\nПопробуй ещё раз /cocksize")
-    elif cocksize_len >=36 and cocksize_len <=40:
-        try:
-            await message.answer("Твой размер " + str(epithet) + ': ' + str(cocksize_len) + " см 😵")
-        except:
-            await message.answer("С первого раза не разглядел. Наверное тут слишком холодно.\nПопробуй ещё раз /cocksize")
-    else:
-        await message.answer("С первого раза не разглядел. Наверное тут слишком холодно.\nПопробуй ещё раз /cocksize" + str(cocksize_len))
+    await message.answer("Эта команда устарела. Воспользуйся инлайн режимом")
 
 def register_handlers_distant(dp: Dispatcher):
     dp.register_message_handler(distant, commands=['distant'])
