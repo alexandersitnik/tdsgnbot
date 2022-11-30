@@ -14,7 +14,7 @@ async def inline_echo(inline_query: InlineQuery):
     # only text will be passed in this example
     cocksize_len = random.randint(1, 40)
     epithet = random.choice(epithets)
-    text = 'Твой размер ' + epithet + ' ' + str(cocksize_len) + ' см'
+    text = 'Мой размер ' + epithet + ': ' + str(cocksize_len) + ' см'
     # text = str(cocksize_len) or 'Не могу разглядеть'
     input_content = InputTextMessageContent(text)
     result_id: str = hashlib.md5(text.encode()).hexdigest()
