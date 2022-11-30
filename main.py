@@ -1,9 +1,7 @@
 import logging
 import asyncio
-import os, hashlib
 from async_scheduler import AsyncScheduler, Job, Periods
 from aiogram import Bot, Dispatcher, executor, types
-from aiogram.types import InputTextMessageContent, InlineQueryResultArticle, InlineQuery
 from create_bot import bot
 from checkpoint import register_handlers_check
 from create_bot import dp, Bot
@@ -15,6 +13,7 @@ from keyboards.registration_kb import register_handlers_members_kb
 from distant import register_handlers_distant, distant_today_personal
 from sick import register_handlers_sick
 from vacation import register_handlers_vacation
+from hookahtimer import register_handlers_hookah
 from echo import register_handlers_inline
 
 scheduler = AsyncScheduler([])
@@ -36,7 +35,8 @@ register_handlers_vacation(dp)
 register_handlers_sick(dp)
 register_handlers_inline(dp)
 register_handlers_gesh(dp)
+register_handlers_hookah(dp)
 if __name__ == '__main__':
     scheduler.add_to_loop()
-    scheduler.add_job(Job('send_daily', dailyReport, None, Periods.minute, 1440, '30.11.22 11:30'))
+    scheduler.add_job(Job('send_daily', dailyReport, None, Periods.minute, 1440, '01.12.22 11:30'))
     executor.start_polling(dp, skip_updates=True, on_startup=on_startup)

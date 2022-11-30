@@ -1,6 +1,7 @@
 from datetime import datetime
 from aiogram import types, Dispatcher
 from create_bot import bot
+from globals import weekdays_list
 import sqlite3
 
 superAdmin_ID = 265007461
@@ -14,10 +15,11 @@ except:
 async def dailyReport():
     today = datetime.today().strftime('%Y-%m-%d')
     today += ' 00:00:00'
+    week_day = datetime.today().weekday()
     distant_today = c.execute("SELECT Name FROM members WHERE ID IN (SELECT MemberID FROM distant WHERE DistantDate = ?)", (today,)).fetchall()
     distant_today_list = ''
     daily_report = ''
-    daily_report = '#ЕжедневныйОтчёт \n' + str(datetime.today().strftime('%d.%m.%Y')) + '\n\n'
+    daily_report = '#ЕжедневныйОтчёт \n' + str(datetime.today().strftime('%d.%m.%Y')) + ', ' + str(weekdays_list[week_day])+ '\n\n'
     if distant_today != []:
         for el in distant_today:
             distant_today_list += '— ' + str(el[0]) + '\n'
@@ -46,7 +48,6 @@ async def dailyReport():
             memberName = c.execute("SELECT Name FROM members WHERE ID = ?", (vacation[0],)).fetchone()[0]
             todayVacationsAnswer += '— ' + memberName + '\n'
             daily_report += "\n*Сегодня в отпуске*:\n" + todayVacationsAnswer
-    week_day = datetime.today().weekday()
     if week_day <5:
         await bot.send_message(-235938403, daily_report, parse_mode='Markdown')
         await bot.send_message(-1001723462410, daily_report, parse_mode='Markdown')
