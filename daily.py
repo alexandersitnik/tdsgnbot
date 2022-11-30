@@ -47,7 +47,7 @@ async def dailyReport():
             todayVacationsAnswer += '— ' + memberName + '\n'
             daily_report += "\n*Сегодня в отпуске*:\n" + todayVacationsAnswer
     week_day = datetime.today().weekday()
-    if week_day <=5:
+    if week_day <5:
         await bot.send_message(-235938403, daily_report, parse_mode='Markdown')
         await bot.send_message(-1001723462410, daily_report, parse_mode='Markdown')
     else:
