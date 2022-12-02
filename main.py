@@ -38,5 +38,5 @@ register_handlers_gesh(dp)
 register_handlers_hookah(dp)
 if __name__ == '__main__':
     scheduler.add_to_loop()
-    scheduler.add_job(Job('send_daily', dailyReport, None, Periods.minute, 1440, '01.12.22 11:30'))
+    scheduler.add_job(Job('send_daily', dailyReport, None, Periods.minute, 1440, '03.12.22 11:30'))
     executor.start_polling(dp, skip_updates=True, on_startup=on_startup)
