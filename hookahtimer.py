@@ -4,18 +4,18 @@ from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import State, StatesGroup
 import data.variables
 
-today = datetime.now()
-
 class Hookah(StatesGroup):
     hookah = State()
 
 async def hookah_start(message: types.Message, state: FSMContext):
     await Hookah.hookah.set()
+    today = datetime.now()
     await message.answer('Установите время для таймера в формате: ЧЧ:ММ')
     async with state.proxy() as data:
         data['hookah'] = message.text
 
 async def sethookahTimer(message: types.Message, state: FSMContext):
+    today = datetime.now()
     try:
         formatedtime = datetime.strptime(message.text, '%H:%M')
         await message.answer('Таймер установлен на: ' + str(formatedtime.time()).split(':')[0] + ' ч. ' + str(formatedtime.time()).split(':')[1] + ' мин.')
