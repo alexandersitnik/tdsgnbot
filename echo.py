@@ -3,7 +3,7 @@ import random
 import hashlib
 from aiogram.types import InlineQuery, \
     InputTextMessageContent, InlineQueryResultArticle
-epithets = ['Ёлочки 🌲', 'Сосульки 🧊', 'Колокольчика 🔔', 'Мишуры 🎊', 'Морковки ⛄️','Имбирного пряника 🥮','Питарды 🧨','Феерверка 🎆','Бингальского огонька 🎇','Игрушки 🐰','Волшебства 🪄', 'Подарочка 🎁']
+epithets = ['ёлочки 🌲', 'сосульки 🧊', 'колокольчика 🔔', 'мишуры 🎊', 'морковки ⛄️','имбирного пряника 🥮','питарды 🧨','феерверка 🎆','бенгальского огонька 🎇','игрушки 🐰','волшебства 🪄', 'подарочка 🎁', 'мандаринки 🍊', 'гирлянды 💡', 'леденца 🍭']
 async def inline_echo(inline_query: InlineQuery):
     print('отработала инлайн функция')
     # id affects both preview and content,
@@ -12,7 +12,7 @@ async def inline_echo(inline_query: InlineQuery):
     # you can set your unique id's
     # but for example i'll generate it based on text because I know, that
     # only text will be passed in this example
-    cocksize_len = random.randint(1, 40)
+    cocksize_len = random.randint(1, 50)
     epithet = random.choice(epithets)
     text = 'Мой размер ' + epithet + ': ' + str(cocksize_len) + ' см'
     # text = str(cocksize_len) or 'Не могу разглядеть'

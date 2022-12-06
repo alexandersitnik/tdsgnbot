@@ -1,8 +1,17 @@
+import requests
+import json
 
-from datetime import datetime
-d = datetime.now()
-#установить время в переменной d на 00 00 00
-d = d.replace(hour=0, minute=0, second=0, microsecond=0)
-day = d.weekday()
-print(d)
-print(day)
+url = "https://zeapi.yandex.net/lab/api/yalm/text3"
+
+payload = json.dumps({
+  "filter": 1,
+  "into": 0,
+  "query": "Тест был"
+})
+headers = {
+  'Content-Type': 'application/json'
+}
+
+response = requests.request("POST", url, headers=headers, data=payload)
+
+print(response.text)
