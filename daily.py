@@ -39,7 +39,9 @@ async def dailyReport():
     else:
         daily_report += "\n*Сегодня никто не болеет*\n\n"
 
-    vacations = c.execute("SELECT * FROM vacation WHERE StartVacationDay <= ? AND EndVacationDay >= ?", (datetime.now(), datetime.now())).fetchall()
+    todaydate = datetime.now()
+    todaydate= todaydate.replace(hour=0, minute=0, second=0, microsecond=0)
+    vacations = c.execute("SELECT * FROM vacation WHERE StartVacationDay <= ? AND EndVacationDay >= ?", (todaydate, todaydate)).fetchall()
     todayVacationsAnswer = ''
     if len(vacations) == 0:
         daily_report += "\n*Сегодня в отпуске никого*"
