@@ -1,17 +1,6 @@
-import requests
-import json
+from datetime import datetime
 
-url = "https://zeapi.yandex.net/lab/api/yalm/text3"
+blockstart = datetime.strptime('06.12.2022', "%d.%m.%Y")
+blockstart = blockstart.replace(hour=16, minute=6, second=0, microsecond=0)
 
-payload = json.dumps({
-  "filter": 1,
-  "into": 0,
-  "query": "Тест был"
-})
-headers = {
-  'Content-Type': 'application/json'
-}
-
-response = requests.request("POST", url, headers=headers, data=payload)
-
-print(response.text)
+print(datetime.now() - blockstart)
