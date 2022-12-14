@@ -46,10 +46,11 @@ async def dailyReport():
     if len(vacations) == 0:
         daily_report += "\n*Сегодня в отпуске никого*"
     else:
+        daily_report += "\n*Сегодня в отпуске*:\n" 
         for vacation in vacations:
             memberName = c.execute("SELECT Name FROM members WHERE ID = ?", (vacation[0],)).fetchone()[0]
             todayVacationsAnswer += '— ' + memberName + '\n'
-            daily_report += "\n*Сегодня в отпуске*:\n" + todayVacationsAnswer
+        daily_report += todayVacationsAnswer
     if week_day <5:
         await bot.send_message(-235938403, daily_report, parse_mode='Markdown')
         await bot.send_message(-1001723462410, daily_report, parse_mode='Markdown')
