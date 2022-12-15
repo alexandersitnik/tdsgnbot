@@ -8,6 +8,7 @@ from checkpoint import register_handlers_check
 from create_bot import dp, Bot
 from daily import dailyReport
 from deseption import register_handlers_deception
+from fortest import register_handlers_ny
 from geshtimer import register_handlers_gesh
 from register_handlers import register_handlers
 from keyboards.registration_kb import register_handlers_members_kb
@@ -38,7 +39,8 @@ register_handlers_inline(dp)
 register_handlers_gesh(dp)
 register_handlers_hookah(dp)
 register_handlers_calendar(dp)
+register_handlers_ny(dp)
 if __name__ == '__main__':
     scheduler.add_to_loop()
-    scheduler.add_job(Job('send_daily', dailyReport, None, Periods.minute, 1440, '14.12.22 11:30'))
+    scheduler.add_job(Job('send_daily', dailyReport, None, Periods.minute, 1440, '16.12.22 11:30'))
     executor.start_polling(dp, skip_updates=True, on_startup=on_startup)
