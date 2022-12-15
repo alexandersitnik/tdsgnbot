@@ -41,14 +41,14 @@ async def get_new_year_fortune(message: types.Message):
     sender_name = sender_member if sender_member is not None else message.from_user.username
     fortune_template = f"{sender_name}, в новом году ты обязательно"
     generated_fortune = None
-    reply_message = await message.reply("Сканирую базу Деда Мороза...🎅")
+    reply_message = await message.reply("Генерирую новогоднее предсказание...🎁")
     aiohttp_session = ClientSession(trust_env=True)
 
     generated_fortune = await congrats_from_porfirii(aiohttp_session, fortune_template, length=40)
     generated_fortune = generated_fortune if generated_fortune is not None else \
         f" сможешь всё. А вот мои нейромозги пока не работают..."
     await aiohttp_session.close()
-    await reply_message.edit_text("Гадаю по звуку салютов...🎆")
+    await reply_message.edit_text("Добавляю немного волшебства...🪄")
     await sleep(2)
     await reply_message.edit_text(f"{fortune_template}{generated_fortune}")
 
