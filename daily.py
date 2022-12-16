@@ -51,7 +51,7 @@ async def dailyReport():
             memberName = c.execute("SELECT Name FROM members WHERE ID = ?", (vacation[0],)).fetchone()[0]
             todayVacationsAnswer += '— ' + memberName + '\n'
         daily_report += todayVacationsAnswer
-    if week_day <5:
+    if week_day <6:
         await bot.send_message(-235938403, daily_report, parse_mode='Markdown')
         await bot.send_message(-1001723462410, daily_report, parse_mode='Markdown')
     else:
