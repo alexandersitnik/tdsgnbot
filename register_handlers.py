@@ -25,7 +25,7 @@ async def help_command(message: types.Message):
         "/sick – сообщить о своём больничном\n" +
         "/who_is_sick_today – узнать кто сегодня на больничном\n\n" +  
         "/feedback - отправить обратную связь\n\n" +
-        "/log_out - сбросить регистрацию\n\n" +
+        "/newyear - получить новогоднее предсказание\n\n" +
         "v 1.5")
     else:
         await message.answer('Коллега, не нужно писать мне в общие чаты, я бот для личных сообщений.')
