@@ -5,11 +5,11 @@ from globals import geshstart, blockstart
 #gshtimer
 async def geshtimer(message: types.Message):
     geashFate = str(geshstart - datetime.now())
-    geshDays = geashFate.split(' ')[0]
-    geshHours = geashFate.split(' ')[2].split(':')[0]
-    geshMinutes = geashFate.split(' ')[2].split(':')[1]
-    geshSeconds = geashFate.split(' ')[2].split(':')[2].split('.')[0]
-    await message.answer('Стартуем в Геш через: \n' + geshDays + ' д. ' + geshHours + ' ч. ' + geshMinutes + ' мин. ' + geshSeconds + ' сек.')
+    # geshDays = geashFate.split(' ')[0]
+    geshHours = geashFate.split(' ')[0].split(':')[0]
+    geshMinutes = geashFate.split(' ')[0].split(':')[1]
+    geshSeconds = geashFate.split(' ')[0].split(':')[2].split('.')[0]
+    await message.answer('Стартуем в Геш через: \n' + geshHours + ' ч. ' + geshMinutes + ' мин. ' + geshSeconds + ' сек.')
 
 def register_handlers_gesh(dp: Dispatcher):
     dp.register_message_handler(geshtimer, commands=['geshtime'])
