@@ -9,7 +9,11 @@ async def geshtimer(message: types.Message):
     geshHours = geashFate.split(' ')[0].split(':')[0]
     geshMinutes = geashFate.split(' ')[0].split(':')[1]
     geshSeconds = geashFate.split(' ')[0].split(':')[2].split('.')[0]
-    await message.answer('Стартуем в Геш через: \n' + geshHours + ' ч. ' + geshMinutes + ' мин. ' + geshSeconds + ' сек.')
+    if int(geshHours) < 0 and int(geshMinutes) < 0 and int(geshSeconds) < 0:
+        await message.answer('Время Геша настало!')
+        await message.answer_sticker(r'CAACAgIAAxkBAAEG8ShjpDnOlUS9-8h45anKXsf8LZCbGwACnwYAAulVBRh_hSfBhR2zUywE')
+    else:
+        await message.answer('Стартуем в Геш через: \n' + geshHours + ' ч. ' + geshMinutes + ' мин. ' + geshSeconds + ' сек.')
 
 def register_handlers_gesh(dp: Dispatcher):
     dp.register_message_handler(geshtimer, commands=['geshtime'])
