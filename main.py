@@ -17,7 +17,7 @@ from sick import register_handlers_sick
 from vacation import register_handlers_vacation
 from hookahtimer import register_handlers_hookah
 from echo import register_handlers_inline
-#test
+#test2
 scheduler = AsyncScheduler([])
 
 async def send_test():
