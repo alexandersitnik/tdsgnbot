@@ -7,7 +7,6 @@ from create_bot import bot
 from checkpoint import register_handlers_check
 from create_bot import dp, Bot
 from daily import dailyReport
-from deseption import register_handlers_deception
 from fortest import register_handlers_ny
 from geshtimer import register_handlers_gesh
 from register_handlers import register_handlers
@@ -30,7 +29,6 @@ async def on_startup(_):
     print('Бот запущен')
 register_handlers(dp)
 register_handlers_check(dp)
-register_handlers_deception(dp)
 register_handlers_members_kb(dp)
 register_handlers_distant(dp)
 register_handlers_vacation(dp)
