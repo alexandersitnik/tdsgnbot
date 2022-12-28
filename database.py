@@ -14,17 +14,17 @@ except:
 def get_members():
     c.execute("SELECT * FROM members")
     return c.fetchall()
-def format_members():
-    members = get_members()
-    for i in members:
-        members_string = 'ID: ' + str(i[0]) + '\n' \
-            + 'Name: ' + i[1] + '\n' \
-            + 'Department: ' + i[2] + '\n' \
-            + 'Grade: ' + i[3] + '\n' \
-            + 'Birthday: ' + i[4] + '\n' \
-            + 'Employer: ' + i[5] + '\n'
-    return members_string
-print(format_members())
+# def format_members():
+#     members = get_members()
+#     for i in members:
+#         members_string = 'ID: ' + str(i[0]) + '\n' \
+#             + 'Name: ' + i[1] + '\n' \
+#             + 'Department: ' + i[2] + '\n' \
+#             + 'Grade: ' + i[3] + '\n' \
+#             + 'Birthday: ' + i[4] + '\n' \
+#             + 'Employer: ' + i[5] + '\n'
+#     return members_string
+# print(format_members())
 
 def get_current_id():
     currentId =  len(get_members()) + 1
