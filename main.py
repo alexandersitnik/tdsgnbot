@@ -9,7 +9,7 @@ from create_bot import dp, Bot
 from daily import dailyReport
 from fortest import register_handlers_ny
 from geshtimer import register_handlers_gesh
-from register_handlers import register_handlers
+from register_handlers import register_handlers1
 from keyboards.registration_kb import register_handlers_members_kb
 from distant import register_handlers_distant, distant_today_personal
 from sick import register_handlers_sick
@@ -27,7 +27,7 @@ logging.basicConfig(level=logging.INFO)
 
 async def on_startup(_):
     print('Бот запущен')
-register_handlers(dp)
+register_handlers1(dp)
 register_handlers_check(dp)
 register_handlers_members_kb(dp)
 register_handlers_distant(dp)

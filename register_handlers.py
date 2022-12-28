@@ -1,5 +1,5 @@
 from aiogram import types, Dispatcher
-from database import format_members
+# from database import format_members
 from aiogram.types import InputFile
 
 #группы пользователей
@@ -42,7 +42,7 @@ async def get_db_command(message: types.Message):
     else:
         await message.answer('Команда доступна только администраторам.')
 
-def register_handlers(dp : Dispatcher):
+def register_handlers1(dp : Dispatcher):
     dp.register_message_handler(help_command, commands = ['help'])
     dp.register_message_handler(whatsnew, commands = ['whats_new'])
     dp.register_message_handler(get_db_command, commands = ['get_db'])
