@@ -6,6 +6,7 @@ from aiogram.dispatcher.filters import Text
 from create_bot import bot
 from datetime import datetime
 from register_handlers import admins
+from calendar_1 import *
 import sqlite3
 
 superAdmin_ID = 265007461
@@ -32,6 +33,7 @@ async def distant(message: types.Message, state: FSMContext):
             data['distantMember'] = c.execute("SELECT ID FROM members WHERE TelegramID = ?", (message.from_user.id,)).fetchone()[0]
         await Distants.next()
         await message.answer("Введи дату удалёнки в формате ДД.ММ.ГГГГ")
+        # await process_calendar_command(message)
     else:
         await message.answer("Эта команда доступна только в личных сообщениях")
 

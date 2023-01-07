@@ -7,5 +7,7 @@ blockstart = datetime.strptime('06.12.2022', "%d.%m.%Y")
 blockstart = blockstart.replace(hour=10, minute=8, second=0, microsecond=0)
 
 weekdays_list = ['понедельник', 'вторник','среда','четверг','пятница','суббота','воскресенье']
+month_list = ['None','Январь', 'Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь']
 print(blockstart)
 print(weekdays_list[0])
+print(month_list[0])
