@@ -13,7 +13,7 @@ async def members_kb(message: types.Message):
     if(message.chat.type == 'private'):
         membersKeyboardList = []
         for el in c.execute("SELECT * FROM members WHERE TelegramID IS NULL").fetchall():
-            membersKeyboardList.append(InlineKeyboardButton(el[1], callback_data=el[0]))
+            membersKeyboardList.append(InlineKeyboardButton(el[1], callback_data=f"register_{el[0]}"))
         membersKeyboard = InlineKeyboardMarkup(row_width=2)
         membersKeyboard.add(*membersKeyboardList)
         await message.answer('Приветствую!\nЯ бот-камикадзе. Совсем скоро Международный Bitrix Разработчик выкатит апдейт для CRM, в котором будут те же функции, только лучше😉 А мой сервер отключат и я перестану работать... \n\n Но не будем о грустном! Дело в том, что пока ты не зарегистрирован, я не могу тебе помочь. Так что давай, не устраивай годзильник и найди своё имя из списка ниже.')
@@ -22,10 +22,11 @@ async def members_kb(message: types.Message):
     else:
         await message.answer('Команда доступна только в личных сообщениях')
 
-@dp.callback_query_handler()
+@dp.callback_query_handler(lambda c: c.data.startswith('register_'))
 async def callback_kb(callback_query: types.CallbackQuery):
+    user_db_id = callback_query.data.removeprefix('register_')
     try:
-        c.execute("UPDATE members SET TelegramID = ? WHERE ID = ?", (callback_query.from_user.id, callback_query.data))
+        c.execute("UPDATE members SET TelegramID = ? WHERE ID = ?", (callback_query.from_user.id, user_db_id))
         db.commit()
         await callback_query.message.answer('Ты успешно зарегистрирован!\n Теперь введи команду: /help чтобы узнать, что я умею')
     except:

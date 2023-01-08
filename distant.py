@@ -6,7 +6,7 @@ from aiogram.dispatcher.filters import Text
 from create_bot import bot
 from datetime import datetime
 from register_handlers import admins
-from calendar_1 import *
+from calendar_1 import create_calendar, process_previous_month_button
 import sqlite3
 
 superAdmin_ID = 265007461
@@ -33,7 +33,9 @@ async def distant(message: types.Message, state: FSMContext):
             data['distantMember'] = c.execute("SELECT ID FROM members WHERE TelegramID = ?", (message.from_user.id,)).fetchone()[0]
         await Distants.next()
         await message.answer("Введи дату удалёнки в формате ДД.ММ.ГГГГ")
-        # await process_calendar_command(message)
+        now_date = datetime.now()
+        # calendar_markup = create_calendar(now_date.year, now_date.month)
+        # await message.answer("Выбери дату удалёнки", reply_markup=calendar_markup)
     else:
         await message.answer("Эта команда доступна только в личных сообщениях")
 
@@ -50,6 +52,8 @@ async def distant_distantMember(message: types.Message, state: FSMContext):
         formated_date = ''
         try:
             formated_date = datetime.strptime(message.text, "%d.%m.%Y")
+            # print(formated_date)
+            # 2022-02-22 00:00:00
         except:
             await message.reply("Неверный формат даты, попробуй еще раз")
             return
@@ -63,8 +67,8 @@ async def distant_distantMember(message: types.Message, state: FSMContext):
             return
         # await database.sql_add_distant(state)
         await message.answer("Ваша удалёнка записана, коллега 🫡")
-        for el in admins:
-            await bot.send_message(el, "#удалёнки\nНовая удалёнка:\n\n" + c.execute("SELECT Name FROM members WHERE ID = ?", (data['distantMember'],)).fetchone()[0] + "\n" + str(data['distantMemberDate']).split(" ")[0])
+        # for el in admins:
+        #     await bot.send_message(el, "#удалёнки\nНовая удалёнка:\n\n" + c.execute("SELECT Name FROM members WHERE ID = ?", (data['distantMember'],)).fetchone()[0] + "\n" + str(data['distantMemberDate']).split(" ")[0])
         await state.finish()
 
 class Feedback(StatesGroup):
