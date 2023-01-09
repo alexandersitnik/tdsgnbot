@@ -41,14 +41,14 @@ async def get_new_year_fortune(message: types.Message):
     sender_name = sender_member if sender_member is not None else message.from_user.first_name
     fortune_template = f"{sender_name}, в этом году в Студии ты обязательно"
     generated_fortune = None
-    reply_message = await message.reply("Генерирую новогоднее предсказание...🎁")
+    reply_message = await message.reply("Составляю прогноз на год...📝")
     aiohttp_session = ClientSession(trust_env=True)
 
     generated_fortune = await congrats_from_porfirii(aiohttp_session, fortune_template, length=40)
     generated_fortune = generated_fortune if generated_fortune is not None else \
         f" сможешь всё. А вот мои нейромозги пока не работают..."
     await aiohttp_session.close()
-    await reply_message.edit_text("Добавляю немного волшебства...🪄")
+    await reply_message.edit_text("Сверяюсь с прогнозом астролога...🌠")
     await sleep(2)
     await reply_message.edit_text(f"{fortune_template}{generated_fortune}")
 
@@ -58,7 +58,7 @@ async def get_new_year_fortune_t(message: types.Message):
         log.info(f"In get_new_year_fortune got unknown telegram_id. From user: {message.from_user.first_name}")
     sender_name = sender_member if sender_member is not None else message.from_user.first_name
     # fortune_template = f"В этом году диджитал агенство «Студии Т»"
-    fortune_template = f"В новом году диджитал агентство «Студия Т» обязательно"
+    fortune_template = f"В этом году диджитал агентство «Студия Т» обязательно"
     generated_fortune = None
     reply_message = await message.reply("Провожу ретроспективу 2022...💾")
     aiohttp_session = ClientSession(trust_env=True)
@@ -67,7 +67,7 @@ async def get_new_year_fortune_t(message: types.Message):
     generated_fortune = generated_fortune if generated_fortune is not None else \
         f" сможешь всё. А вот мои нейромозги пока не работают..."
     await aiohttp_session.close()
-    await reply_message.edit_text("Подвожу итоги...📝")
+    await reply_message.edit_text("Составляю прогноз на 2023...📝")
     await sleep(2)
     await reply_message.edit_text(f"{fortune_template}{generated_fortune}")
 
