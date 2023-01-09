@@ -39,7 +39,7 @@ async def get_new_year_fortune(message: types.Message):
     if sender_member is None:
         log.info(f"In get_new_year_fortune got unknown telegram_id. From user: {message.from_user.first_name}")
     sender_name = sender_member if sender_member is not None else message.from_user.first_name
-    fortune_template = f"{sender_name}, в новом году ты обязательно"
+    fortune_template = f"{sender_name}, в этом году в Студии ты обязательно"
     generated_fortune = None
     reply_message = await message.reply("Генерирую новогоднее предсказание...🎁")
     aiohttp_session = ClientSession(trust_env=True)
