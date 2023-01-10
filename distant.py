@@ -67,8 +67,8 @@ async def distant_distantMember(message: types.Message, state: FSMContext):
             return
         # await database.sql_add_distant(state)
         await message.answer("Ваша удалёнка записана, коллега 🫡")
-        # for el in admins:
-        #     await bot.send_message(el, "#удалёнки\nНовая удалёнка:\n\n" + c.execute("SELECT Name FROM members WHERE ID = ?", (data['distantMember'],)).fetchone()[0] + "\n" + str(data['distantMemberDate']).split(" ")[0])
+        for el in admins:
+            await bot.send_message(el, "#удалёнки\nНовая удалёнка:\n\n" + c.execute("SELECT Name FROM members WHERE ID = ?", (data['distantMember'],)).fetchone()[0] + "\n" + str(data['distantMemberDate']).split(" ")[0])
         await state.finish()
 
 class Feedback(StatesGroup):
