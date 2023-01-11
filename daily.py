@@ -23,7 +23,7 @@ async def dailyReport():
     if distant_today != []:
         for el in distant_today:
             distant_today_list += '— ' + str(el[0]) + '\n'
-        daily_report += "*Сегодня удалёнка у:* \n" + str(distant_today_list) + '\n'
+        daily_report += "*Сегодня на удалёнке:* \n" + str(distant_today_list) + '\n'
     else:
         daily_report += "*Сегодня удалёнки ни у кого нет*" + '\n\n'
 
