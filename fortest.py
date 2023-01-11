@@ -72,7 +72,7 @@ async def get_new_year_fortune_t(message: types.Message):
     await reply_message.edit_text(f"{fortune_template}{generated_fortune}")
 
 async def newyear_new(message: types.Message):
-    await message.reply('Я слышал, что у вас для этого есть @PredskazBot. Вот ему и пишите.')
+    await message.reply('Что имеем - не храним, потерявши - плачем')
 
 
 def register_handlers_ny(dp: Dispatcher):
