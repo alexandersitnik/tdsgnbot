@@ -75,5 +75,5 @@ async def newyear_new(message: types.Message):
     await message.reply('Что имеем - не храним, потерявши - плачем')
 
 
-def get_new_year_fortune(dp: Dispatcher):
-    dp.register_message_handler(newyear_new, commands=['prediction'])
+def register_handlers_ny(dp: Dispatcher):
+    dp.register_message_handler(get_new_year_fortune, commands=['prediction'])

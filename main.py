@@ -7,6 +7,7 @@ from create_bot import bot
 from checkpoint import register_handlers_check
 from create_bot import dp, Bot
 from daily import dailyReport
+from fortest import get_new_year_fortune
 from fortest import register_handlers_ny
 from geshtimer import register_handlers_gesh
 from register_handlers import register_handlers1
@@ -36,6 +37,7 @@ register_handlers_inline(dp)
 register_handlers_gesh(dp)
 register_handlers_hookah(dp)
 register_handlers_calendar(dp)
+# get_new_year_fortune(dp)
 register_handlers_ny(dp)
 if __name__ == '__main__':
     scheduler.add_to_loop()
