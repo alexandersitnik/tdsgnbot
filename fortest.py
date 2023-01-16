@@ -41,14 +41,14 @@ async def get_new_year_fortune(message: types.Message):
     sender_name = sender_member if sender_member is not None else message.from_user.first_name
     fortune_template = f"{sender_name}, в этом году на работе ты обязательно"
     generated_fortune = None
-    reply_message = await message.reply("Анализирую твою аватарку...📝")
+    reply_message = await message.reply("Составляю предсказние на неделю...📝")
     aiohttp_session = ClientSession(trust_env=True)
 
     generated_fortune = await congrats_from_porfirii(aiohttp_session, fortune_template, length=40)
     generated_fortune = generated_fortune if generated_fortune is not None else \
         f" сможешь всё. А вот мои нейромозги пока не работают..."
     await aiohttp_session.close()
-    await reply_message.edit_text("Сверяюсь с прогнозом астролога...🌠")
+    await reply_message.edit_text("Провожу соц опрос...👮🏻‍♂️")
     await sleep(2)
     await reply_message.edit_text(f"{fortune_template}{generated_fortune}")
 
@@ -75,5 +75,5 @@ async def newyear_new(message: types.Message):
     await message.reply('Что имеем - не храним, потерявши - плачем')
 
 
-def register_handlers_ny(dp: Dispatcher):
-    dp.register_message_handler(newyear_new, commands=['newyear'])
+def get_new_year_fortune(dp: Dispatcher):
+    dp.register_message_handler(newyear_new, commands=['prediction'])
