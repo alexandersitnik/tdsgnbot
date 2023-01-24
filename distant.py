@@ -189,6 +189,10 @@ async def what_time_is_it(message: types.Message):
 async def cocksize(message: types.Message):
     await message.answer("Эта команда устарела. Воспользуйся инлайн режимом")
 
+async def in_jail(message: types.Message):
+    await message.answer("Я в тюрьме, потому что ездил без водительских прав. Все задачи сдвигаются на 15 суток. Приношу свои извинения за неудобства")
+    await message.answer_sticker(r'CAACAgIAAxkBAAEHaGhjz3IZQhAd4L_p-LFAtGHXz0RjxQACVBYAAtl0gElO0rj0_1bJXC0E')
+
 def register_handlers_distant(dp: Dispatcher):
     dp.register_message_handler(distant, commands=['distant'])
     dp.register_message_handler(stop_distant, commands=['stop'], state="*")
@@ -207,3 +211,4 @@ def register_handlers_distant(dp: Dispatcher):
     dp.register_message_handler(what_time_is_it, commands=['time'])
     dp.register_message_handler(cocksize, commands=['cocksize'])
     dp.register_message_handler(delete_distant, commands=['delete_last_distant'])
+    dp.register_message_handler(in_jail, commands=['jail'])
