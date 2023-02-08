@@ -7,6 +7,7 @@ from create_bot import bot
 from checkpoint import register_handlers_check
 from create_bot import dp, Bot
 from daily import dailyReport
+from polls import create_poll
 from fortest import get_new_year_fortune
 from fortest import register_handlers_ny
 from geshtimer import register_handlers_gesh
@@ -37,9 +38,9 @@ register_handlers_inline(dp)
 register_handlers_gesh(dp)
 register_handlers_hookah(dp)
 register_handlers_calendar(dp)
-# get_new_year_fortune(dp)
 register_handlers_ny(dp)
 if __name__ == '__main__':
     scheduler.add_to_loop()
-    scheduler.add_job(Job('send_daily', dailyReport, None, Periods.minute, 1440, '25.01.23 11:30'))
+    scheduler.add_job(Job('send_daily', dailyReport, None, Periods.minute, 1440, '09.02.23 11:30'))
+    scheduler.add_job(Job('send_polls', create_poll, None, Periods.minute, 1440, '09.02.23 11:00'))
     executor.start_polling(dp, skip_updates=True, on_startup=on_startup)
