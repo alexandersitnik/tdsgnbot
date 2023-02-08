@@ -13,4 +13,4 @@ async def create_poll():
         allows_multiple_answers=True,
         open_period=5400,
     )
-    await bot.send_poll(chat_id=265007461, question=poll.question, options=poll.options, is_anonymous=poll.is_anonymous, type=poll.type, allows_multiple_answers=poll.allows_multiple_answers, open_period=poll.open_period)
+    await bot.send_poll(chat_id=-1001723462410, question=poll.question, options=poll.options, is_anonymous=poll.is_anonymous, type=poll.type, allows_multiple_answers=poll.allows_multiple_answers, open_period=poll.open_period)
