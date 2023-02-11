@@ -3,6 +3,7 @@ from create_bot import bot
 from datetime import datetime
 from register_handlers import admins
 import asyncio
+from globals import weekdays_list
 
 restorans = {
     'Йоки': 'https://yokitoki.ru/',
@@ -17,31 +18,34 @@ restorans = {
 }
 
 async def create_poll():
-    poll = types.Poll(
-        question="Обэд",
-        options=["Йоки", "Южане", "Ребро", "Шава", "KFC", "Make Love", "Баракат", "Антрекот", "Посмотреть результаты"],
-        is_anonymous=False,
-        type=types.PollType.REGULAR,
-        allows_multiple_answers=True,
-        # open_period=10,
-    )
-    poll_id = await bot.send_poll(chat_id=-1001723462410, question=poll.question, options=poll.options, is_anonymous=poll.is_anonymous, type=poll.type, allows_multiple_answers=poll.allows_multiple_answers)
-    await asyncio.sleep(1800)
-    poll_results = await bot.stop_poll(chat_id=-1001723462410, message_id=poll_id.message_id)
-    print('Опрос закрыт')
-    max = 0
-    food = ''
-    for poll_option in poll_results.options:
-        if poll_option.voter_count > max:
-            max = poll_option.voter_count
-            food = poll_option.text
-    if food == 'Посмотреть результаты':
-        await bot.send_message(-1001723462410, f'Никто не ответил')
-    await bot.send_message(-1001723462410, f'Сегодня обедаем в {food}')
-    await bot.send_message(-1001723462410, f'Заказы принимаются в ЛС @KrisKladova до 12.20 {restorans[food]}')
+    if weekdays_list[datetime.today().weekday()] != 5 and weekdays_list[datetime.today().weekday()] != 6:
+        poll = types.Poll(
+            question="Обэд",
+            options=["Йоки", "Южане", "Ребро", "Шава", "KFC", "Make Love", "Баракат", "Антрекот", "Посмотреть результаты"],
+            is_anonymous=False,
+            type=types.PollType.REGULAR,
+            allows_multiple_answers=True,
+            # open_period=10,
+        )
+        poll_id = await bot.send_poll(chat_id=-1001723462410, question=poll.question, options=poll.options, is_anonymous=poll.is_anonymous, type=poll.type, allows_multiple_answers=poll.allows_multiple_answers)
+        await asyncio.sleep(1800)
+        poll_results = await bot.stop_poll(chat_id=-1001723462410, message_id=poll_id.message_id)
+        print('Опрос закрыт')
+        max = 0
+        food = ''
+        for poll_option in poll_results.options:
+            if poll_option.voter_count > max:
+                max = poll_option.voter_count
+                food = poll_option.text
+        if food != 'Посмотреть результаты':
+            await bot.send_message(-1001723462410, f'Сегодня обедаем в {food}')
+            await bot.send_message(-1001723462410, f'Заказы принимаются в ЛС @KrisKladova до 12.20 {restorans[food]}')
+        else:
+            await bot.send_message(-1001723462410, f'Все хотят посмотреть результаты, но никто, видимо, не хочет кушать. Так тому и быть. Никто не ест.')
 
-    print(poll_results)
-    return poll_id
+        print(poll_results)
+        return poll_id
+
 
 
 # chat_id=-1001723462410

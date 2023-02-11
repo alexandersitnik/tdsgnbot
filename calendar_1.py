@@ -22,8 +22,10 @@ def create_calendar(year: int, month: int):
 
 async def process_calendar_selection(callback_query: types.CallbackQuery):
     selected, day = callback_query.data.split('-')
-    await bot.send_message(callback_query.from_user.id, f'Вы выбрали {day} число')
-    return day
+    selected_date = datetime(tempdate.year, tempdate.month, int(day))
+    client_selected_date = str(selected_date)
+    await bot.send_message(callback_query.from_user.id, f'Вы выбрали {client_selected_date} число')
+    return selected_date
 
 async def process_pass_button(callback_query: types.CallbackQuery):
     await bot.send_message(callback_query.from_user.id, 'Дата не выбрана')
@@ -34,7 +36,7 @@ async def process_previous_month_button(callback_query: types.CallbackQuery):
     tempdate = previous_month
     client_date = str(month_list[tempdate.month]) + ' ' + str(tempdate.year)
     markup = create_calendar(previous_month.year, previous_month.month)
-    await bot.edit_message_text(f"Дата: {client_date}", callback_query.from_user.id, callback_query.message.message_id, reply_markup=markup)
+    await bot.edit_message_text(f"{client_date}", callback_query.from_user.id, callback_query.message.message_id, reply_markup=markup)
 
 async def process_next_month_button(callback_query: types.CallbackQuery):
     global tempdate
@@ -50,7 +52,7 @@ async def process_calendar_command(message: types.Message):
     current = datetime.now()
     client_date = month_list[current.month] + ' ' + str(current.year)
     markup = create_calendar(current.year, current.month)
-    await bot.send_message(message.from_user.id, f"Дата: {client_date}", reply_markup=markup)
+    await bot.send_message(message.from_user.id, f"{client_date}", reply_markup=markup)
 
 def register_handlers_calendar(dp: Dispatcher):
     dp.register_message_handler(process_calendar_command, commands=['calendar'])
