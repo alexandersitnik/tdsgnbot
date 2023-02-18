@@ -18,7 +18,7 @@ restorans = {
 }
 
 async def create_poll():
-    if weekdays_list[datetime.today().weekday()] != 5 and weekdays_list[datetime.today().weekday()] != 6:
+    if datetime.today().weekday() != 5 and datetime.today().weekday() != 6:
         poll = types.Poll(
             question="Обэд",
             options=["Йоки", "Южане", "Ребро", "Шава", "KFC", "Make Love", "Баракат", "Антрекот", "Посмотреть результаты"],
