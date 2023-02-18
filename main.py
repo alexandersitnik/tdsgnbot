@@ -23,7 +23,7 @@ scheduler = AsyncScheduler([])
 async def send_test():
     await bot.send_message(265007461, text='Тестовое сообщение')
 
-
+#проверка
 logging.basicConfig(level=logging.INFO)
 
 async def on_startup(_):
