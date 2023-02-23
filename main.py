@@ -41,6 +41,6 @@ register_handlers_calendar(dp)
 register_handlers_ny(dp)
 if __name__ == '__main__':
     scheduler.add_to_loop()
-    scheduler.add_job(Job('send_daily', dailyReport, None, Periods.minute, 1440, '20.02.23 11:30'))
-    scheduler.add_job(Job('send_polls', create_poll, None, Periods.minute, 1440, '20.02.23 11:10'))
+    scheduler.add_job(Job('send_daily', dailyReport, None, Periods.minute, 1440, '27.02.23 11:30'))
+    scheduler.add_job(Job('send_polls', create_poll, None, Periods.minute, 1440, '27.02.23 11:10'))
     executor.start_polling(dp, skip_updates=True, on_startup=on_startup)
