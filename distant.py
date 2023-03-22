@@ -55,7 +55,7 @@ async def distant_distantMember(message: types.Message, state: FSMContext):
             # print(formated_date)
             # 2022-02-22 00:00:00
         except:
-            await message.reply("Неверный формат даты, попробуй еще раз")
+            await message.reply("Неверный формат даты, попробуй еще раз. Либо введи /stop, чтобы сбросить запись")
             return
         data['distantMemberDate'] = formated_date
         try:
