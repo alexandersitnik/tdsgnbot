@@ -14,6 +14,7 @@ restorans = {
     'Make Love': 'https://makelovepizza.ru/tomsk',
     'Баракат': 'https://barakat70.ru/catalog/',
     'Антрекот': 'https://antrekot.tomsk.ru/',
+    'Буузы': 'https://ненагуглил ссылку, не знаю',
     'Посмотреть результаты': 0,
 }
 
@@ -21,7 +22,7 @@ async def create_poll():
     if datetime.today().weekday() != 5 and datetime.today().weekday() != 6:
         poll = types.Poll(
             question="Обэд",
-            options=["Ребро", "Шава", "KFC", "Пиццерио", "Антрекот", "Южане", "Йоки"],
+            options=["Баракат", "Ребро", "Шава", "KFC", "Пиццерио", "Антрекот", "Южане", "Йоки", "Буузы"],
             is_anonymous=False,
             type=types.PollType.REGULAR,
             allows_multiple_answers=True,
