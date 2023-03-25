@@ -6,7 +6,6 @@ from aiogram.dispatcher.filters import Text
 from create_bot import bot
 from datetime import datetime
 from register_handlers import admins
-from calendar_1 import create_calendar, process_previous_month_button
 import sqlite3
 
 superAdmin_ID = 265007461

@@ -2,7 +2,6 @@ import logging
 import asyncio
 from async_scheduler import AsyncScheduler, Job, Periods
 from aiogram import Bot, Dispatcher, executor, types
-from calendar_1 import register_handlers_calendar
 from create_bot import bot
 from checkpoint import register_handlers_check
 from create_bot import dp, Bot
@@ -18,6 +17,7 @@ from sick import register_handlers_sick
 from vacation import register_handlers_vacation
 from hookahtimer import register_handlers_hookah
 from echo import register_handlers_inline
+from weather import register_handlers_weather
 scheduler = AsyncScheduler([])
 
 async def send_test():
@@ -37,10 +37,10 @@ register_handlers_sick(dp)
 register_handlers_inline(dp)
 register_handlers_gesh(dp)
 register_handlers_hookah(dp)
-register_handlers_calendar(dp)
 register_handlers_ny(dp)
+register_handlers_weather(dp)
 if __name__ == '__main__':
     scheduler.add_to_loop()
-    scheduler.add_job(Job('send_daily', dailyReport, None, Periods.minute, 1440, '22.03.23 11:30'))
-    scheduler.add_job(Job('send_polls', create_poll, None, Periods.minute, 1440, '22.03.23 11:10'))
+    scheduler.add_job(Job('send_daily', dailyReport, None, Periods.minute, 1440, '27.03.23 11:30'))
+    scheduler.add_job(Job('send_polls', create_poll, None, Periods.minute, 1440, '27.03.23 11:10'))
     executor.start_polling(dp, skip_updates=True, on_startup=on_startup)
