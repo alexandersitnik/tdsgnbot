@@ -189,8 +189,11 @@ async def cocksize(message: types.Message):
     await message.answer("Эта команда устарела. Воспользуйся инлайн режимом")
 
 async def in_jail(message: types.Message):
-    await message.answer("Я в тюрьме, потому что ездил без водительских прав. Все задачи сдвигаются на 15 суток. Приношу свои извинения за неудобства")
-    await message.answer_sticker(r'CAACAgIAAxkBAAEHaGhjz3IZQhAd4L_p-LFAtGHXz0RjxQACVBYAAtl0gElO0rj0_1bJXC0E')
+    if message.from_user.id == superAdmin_ID:
+        await message.answer("Я в тюрьме, потому что ездил без водительских прав. Все задачи сдвигаются на 15 суток. Приношу свои извинения за неудобства")
+        await message.answer_sticker(r'CAACAgIAAxkBAAEHaGhjz3IZQhAd4L_p-LFAtGHXz0RjxQACVBYAAtl0gElO0rj0_1bJXC0E')
+    else:
+        await message.answer("Ты не можешь использовать эту команду")
 
 def register_handlers_distant(dp: Dispatcher):
     dp.register_message_handler(distant, commands=['distant'])
