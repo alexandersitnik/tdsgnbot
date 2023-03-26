@@ -189,7 +189,7 @@ async def cocksize(message: types.Message):
     await message.answer("Эта команда устарела. Воспользуйся инлайн режимом")
 
 async def in_jail(message: types.Message):
-    if message.from_user.id == superAdmin_ID:
+    if message.from_user.id == 640370572:
         await message.answer("Я в тюрьме, потому что ездил без водительских прав. Все задачи сдвигаются на 15 суток. Приношу свои извинения за неудобства")
         await message.answer_sticker(r'CAACAgIAAxkBAAEHaGhjz3IZQhAd4L_p-LFAtGHXz0RjxQACVBYAAtl0gElO0rj0_1bJXC0E')
     else:
