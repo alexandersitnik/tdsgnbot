@@ -18,6 +18,7 @@ from vacation import register_handlers_vacation
 from hookahtimer import register_handlers_hookah
 from echo import register_handlers_inline
 from weather import register_handlers_weather
+from distant import clearIQ
 scheduler = AsyncScheduler([])
 
 async def send_test():
@@ -41,6 +42,7 @@ register_handlers_ny(dp)
 register_handlers_weather(dp)
 if __name__ == '__main__':
     scheduler.add_to_loop()
-    scheduler.add_job(Job('send_daily', dailyReport, None, Periods.minute, 1440, '27.03.23 11:30'))
-    scheduler.add_job(Job('send_polls', create_poll, None, Periods.minute, 1440, '27.03.23 11:10'))
+    scheduler.add_job(Job('send_daily', dailyReport, None, Periods.minute, 1440, '30.03.23 11:30'))
+    scheduler.add_job(Job('send_polls', create_poll, None, Periods.minute, 1440, '30.03.23 11:10'))
+    scheduler.add_job(Job('clearIQ', clearIQ, None, Periods.minute, 1440, '30.03.23 08:00'))
     executor.start_polling(dp, skip_updates=True, on_startup=on_startup)

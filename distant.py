@@ -195,6 +195,10 @@ async def in_jail(message: types.Message):
     else:
         await message.answer("Ты не можешь использовать эту команду")
 
+async def clearIQ():
+    c.execute("DELETE FROM iq")
+    db.commit()
+
 def register_handlers_distant(dp: Dispatcher):
     dp.register_message_handler(distant, commands=['distant'])
     dp.register_message_handler(stop_distant, commands=['stop'], state="*")
