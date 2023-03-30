@@ -199,6 +199,16 @@ async def clearIQ():
     c.execute("DELETE FROM iq")
     db.commit()
 
+async def iq_staistics(message: types.Message):
+    iq = c.execute("SELECT * FROM iq").fetchall()
+    iq_list = ''
+    #подсчитать все значения IQNum и вычислить среднее
+    iq_sum = 0
+    for el in iq:
+        iq_sum += int(el[1])
+    iq_average = iq_sum / len(iq)
+    await message.answer("Средний IQ в Студии сегодня: " + str(iq_average))
+
 def register_handlers_distant(dp: Dispatcher):
     dp.register_message_handler(distant, commands=['distant'])
     dp.register_message_handler(stop_distant, commands=['stop'], state="*")
@@ -218,3 +228,4 @@ def register_handlers_distant(dp: Dispatcher):
     dp.register_message_handler(cocksize, commands=['cocksize'])
     dp.register_message_handler(delete_distant, commands=['delete_last_distant'])
     dp.register_message_handler(in_jail, commands=['jail'])
+    dp.register_message_handler(iq_staistics, commands=['iq'])
