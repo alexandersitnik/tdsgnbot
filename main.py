@@ -44,5 +44,5 @@ if __name__ == '__main__':
     scheduler.add_to_loop()
     scheduler.add_job(Job('send_daily', dailyReport, None, Periods.minute, 1440, '01.04.23 12:11'))
     scheduler.add_job(Job('send_polls', create_poll, None, Periods.minute, 1440, '01.04.23 11:10'))
-    scheduler.add_job(Job('clearIQ', clearIQ, None, Periods.minute, 1440, '01.04.23 08:00'))
+    scheduler.add_job(Job('clearIQ', clearIQ, None, Periods.minute, 1440, '01.04.23 08:01'))
     executor.start_polling(dp, skip_updates=True, on_startup=on_startup)
