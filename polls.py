@@ -14,7 +14,7 @@ restorans = {
     'Make Love': 'https://makelovepizza.ru/tomsk',
     'Баракат': 'https://barakat70.ru/catalog/',
     'Антрекот': 'https://antrekot.tomsk.ru/',
-    'Буузы': 'https://ненагуглил ссылку, не знаю',
+    'Шашлыкофф': 'https://tomsk.shashlikoff.com/',
     'Посмотреть результаты': 0,
 }
 
@@ -40,7 +40,7 @@ async def create_poll():
                 food = poll_option.text
         if food != 'Посмотреть результаты':
             await bot.send_message(-1001723462410, f'Сегодня обедаем в {food}')
-            await bot.send_message(-1001723462410, f'Заказы принимаются в ЛС @KrisKladova до 12.20 {restorans[food]}')
+            await bot.send_message(-1001723462410, f'Заказы принимаются в ЛС @nastasilot до 12.20 {restorans[food]}')
         else:
             await bot.send_message(-1001723462410, f'Все хотят посмотреть результаты, но никто, видимо, не хочет кушать. Так тому и быть. Никто не ест.')
 
