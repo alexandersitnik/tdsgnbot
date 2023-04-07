@@ -22,7 +22,7 @@ async def inline_echo(inline_query: InlineQuery):
     else:
         cocksize_len = c.execute("SELECT IQNum FROM iq WHERE MemberID = ?", (memberID,)).fetchone()[0]
         db.commit()
-    text = 'Твой IQ равен: ' + str(cocksize_len)
+    text = 'Мой IQ равен: ' + str(cocksize_len)
     input_content = InputTextMessageContent(text)
     result_id: str = hashlib.md5(text.encode()).hexdigest()
     item = InlineQueryResultArticle(

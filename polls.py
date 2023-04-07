@@ -22,7 +22,7 @@ async def create_poll():
     if datetime.today().weekday() != 5 and datetime.today().weekday() != 6:
         poll = types.Poll(
             question="Обэд",
-            options=["Баракат", "Ребро", "Шава", "KFC", "Пиццерио", "Антрекот", "Южане", "Йоки", "Буузы"],
+            options=["Баракат", "Ребро", "Шава", "KFC", "Пиццерио", "Антрекот", "Южане", "Йоки", "Шашлыкофф"],
             is_anonymous=False,
             type=types.PollType.REGULAR,
             allows_multiple_answers=True,
