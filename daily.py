@@ -57,7 +57,7 @@ async def dailyReport():
         weather_url = "https://wttr.in/{}?m&format=2&lang=ru".format(city_name)
         response = requests.get(weather_url)
         return response.text
-    weather = await get_weather('Tomsk')
+    weather = await get_weather('Новосибирск')
     daily_report += '\n\n Температура в Томске:\n' + str(weather)
     if week_day <5:
         await bot.send_message(-235938403, daily_report, parse_mode='Markdown')
