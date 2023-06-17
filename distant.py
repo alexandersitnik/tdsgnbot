@@ -1,11 +1,12 @@
 from calendar import monthrange
+import calendar
 import random
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import State, StatesGroup
 from aiogram import types, Dispatcher
 from aiogram.dispatcher.filters import Text
 from create_bot import bot
-from datetime import datetime
+from datetime import datetime, timedelta
 from register_handlers import admins
 import sqlite3
 
@@ -17,6 +18,111 @@ try:
     c = db.cursor()
 except:
     pass
+
+# Словарь для хранения данных о выбранной дате для каждого чата
+users_calendar = {}
+
+
+# Функция для создания разметки календаря
+def create_calendar(year, month):
+    markup = types.InlineKeyboardMarkup(row_width=7)
+    # days = [types.InlineKeyboardButton(calendar.day_abbr[i], callback_data=str(i)) for i in range(7)]
+    # markup.row(*days)
+
+    my_calendar = calendar.monthcalendar(year, month)
+    for week in my_calendar:
+        days = [
+            types.InlineKeyboardButton(str(day) if day != 0 else " ", callback_data=str(day))
+            for day in week
+        ]
+        markup.row(*days)
+
+    markup.row(
+        types.InlineKeyboardButton("<<", callback_data="PREV_MONTH"),
+        types.InlineKeyboardButton(">>", callback_data="NEXT_MONTH"),
+    )
+
+    return markup
+
+
+# Функция для отображения календаря
+async def show_calendar(chat_id, current_year, current_month):
+    calendar_markup = create_calendar(current_year, current_month)
+    months = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"]
+    await bot.send_message(chat_id, f"{months[current_month-1]} {current_year}", reply_markup=calendar_markup)
+
+
+# Обработчик команды /calendar
+async def start_command(message: types.Message):
+    chat_id = message.chat.id
+    users_calendar[chat_id] = {}
+
+    current_date = datetime.now()
+    current_year = current_date.year
+    current_month = current_date.month
+
+    users_calendar[chat_id]['year'] = current_year
+    users_calendar[chat_id]['month'] = current_month
+
+    await show_calendar(chat_id, current_year, current_month)
+
+
+# Обработчик нажатий на кнопки календаря
+async def handle_callback_query(query: types.CallbackQuery):
+    chat_id = query.message.chat.id
+    year = users_calendar[chat_id].get('year', datetime.now().year)
+    month = users_calendar[chat_id].get('month', datetime.now().month)
+
+    if query.data == 'PREV_MONTH':
+        if month == 1:
+            year -= 1
+            month = 12
+        else:
+            month -= 1
+    elif query.data == 'NEXT_MONTH':
+        if month == 12:
+            year += 1
+            month = 1
+        else:
+            month += 1
+
+    users_calendar[chat_id]['year'] = year
+    users_calendar[chat_id]['month'] = month
+
+    # Изменяем существующее сообщение с календарем
+    await show_calendar(chat_id, year, month)
+    await query.message.delete()
+
+
+# Обработчик нажатий на кнопки с датами календаря
+async def handle_date_selection(query: types.CallbackQuery, state: FSMContext):
+    chat_id = query.message.chat.id
+    current_date = datetime.now()
+    selected_date = query.data
+    selected_year = current_date.year
+    try:
+        user_selected_date = datetime(selected_year, int(users_calendar[chat_id]['month']), int(selected_date)).strftime("%d.%m.%Y")
+        user_selected_obj = datetime.strptime(user_selected_date, "%d.%m.%Y")
+        user_selected_obj_minus_day = current_date - timedelta(days=1)
+        fd = user_selected_obj.strftime("%Y-%m-%d %H:%M:%S")
+        if user_selected_obj < user_selected_obj_minus_day:
+            await bot.send_message(chat_id, "Это прошлое. Прошлого уже не вернуть. ")
+            return
+        await bot.send_message(chat_id, f"Вы выбрали {selected_date} число и месяц: {users_calendar[chat_id]['month']}")
+
+    # Записываем выбранную дату в формате ДД.ММ.ГГГГ
+        async with state.proxy() as data:
+            # formated_date = datetime.strptime(user_selected_date, "%d").strftime("%d.%m.%Y")
+            data['distantMemberDate'] = fd
+    except:
+        await bot.send_message(chat_id, "Это не число. Рекомендую запустить команду поверки IQ")
+        return
+    # await bot.send_message(chat_id, user_selected_date)
+
+    # Запускаем функцию distant_distantMember с выбранной датой
+    await distant_distantMember(query.message, state)
+    await query.message.delete()
+
 
 #-------------------------------Запись удаленки через машину состояний------------------------------------------------
 
@@ -31,11 +137,10 @@ async def distant(message: types.Message, state: FSMContext):
         await message.answer("Начинаю процедуру записи удалёнки 🧐\n\nТы идентифицирован как: " + memberName + ".\n\n Если это не ты или просто хочешь остановить запись, то напиши /stop или «отмена»")
         async with state.proxy() as data:
             data['distantMember'] = c.execute("SELECT ID FROM members WHERE TelegramID = ?", (message.from_user.id,)).fetchone()[0]
-        await Distants.next()
-        await message.answer("Введи дату удалёнки в формате ДД.ММ.ГГГГ")
+        # await message.answer("Введи дату удалёнки в формате ДД.ММ.ГГГГ")
+        await start_command(message)
         now_date = datetime.now()
-        # calendar_markup = create_calendar(now_date.year, now_date.month)
-        # await message.answer("Выбери дату удалёнки", reply_markup=calendar_markup)
+        await Distants.next()
     else:
         await message.answer("Эта команда доступна только в личных сообщениях")
 
@@ -49,15 +154,15 @@ async def stop_distant(message: types.Message, state: FSMContext):
 async def distant_distantMember(message: types.Message, state: FSMContext):
 
     async with state.proxy() as data:
-        formated_date = ''
-        try:
-            formated_date = datetime.strptime(message.text, "%d.%m.%Y")
-            # print(formated_date)
-            # 2022-02-22 00:00:00
-        except:
-            await message.reply("Неверный формат даты, попробуй еще раз. Либо введи /stop, чтобы сбросить запись")
-            return
-        data['distantMemberDate'] = formated_date
+        # formated_date = ''
+        # try:
+        #     formated_date = datetime.strptime(message.text, "%d.%m.%Y")
+        #     # print(formated_date)
+        #     # 2022-02-22 00:00:00
+        # except:
+        #     await message.reply("Неверный формат даты, попробуй еще раз. Либо введи /stop, чтобы сбросить запись")
+        #     return
+        # data['distantMemberDate'] = formated_date
         try:
             c.execute("INSERT INTO distant (MemberID, DistantDate) VALUES (?, ?)", (data['distantMember'], data['distantMemberDate']))
             db.commit()
@@ -230,3 +335,6 @@ def register_handlers_distant(dp: Dispatcher):
     dp.register_message_handler(delete_distant, commands=['delete_last_distant'])
     dp.register_message_handler(in_jail, commands=['jail'])
     dp.register_message_handler(iq_staistics, commands=['iq'])
+    # dp.register_message_handler(start_command, commands=['calendar'])
+    dp.register_callback_query_handler(handle_callback_query, lambda query: query.data in ['PREV_MONTH', 'NEXT_MONTH'], state=Distants.distantMemberDate)
+    dp.register_callback_query_handler(handle_date_selection, lambda query: query.data.isdigit(), state=Distants.distantMemberDate)
