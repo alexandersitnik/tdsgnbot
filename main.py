@@ -12,7 +12,7 @@ from fortest import register_handlers_ny
 from geshtimer import register_handlers_gesh
 from register_handlers import register_handlers1
 from keyboards.registration_kb import register_handlers_members_kb
-from distant import register_handlers_distant, distant_today_personal
+from distant import handle_updates, register_handlers_distant
 from sick import register_handlers_sick
 from vacation import register_handlers_vacation
 from hookahtimer import register_handlers_hookah
@@ -46,3 +46,6 @@ if __name__ == '__main__':
     scheduler.add_job(Job('send_polls', create_poll, None, Periods.minute, 1440, '19.06.23 11:10'))
     scheduler.add_job(Job('clearIQ', clearIQ, None, Periods.minute, 1440, '17.06.23 08:01'))
     executor.start_polling(dp, skip_updates=True, on_startup=on_startup)
+    loop = asyncio.get_event_loop()
+    loop.create_task(handle_updates())
+    loop.run_forever()

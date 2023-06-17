@@ -2,6 +2,8 @@ from aiogram import types, Dispatcher
 # from database import format_members
 from aiogram.types import InputFile
 
+# from distant import handle_date_selection, handle_messages
+
 #группы пользователей
 #администраторы
 admins = [265007461, 1626350569, 187993761, 178114342, 784075692]
@@ -46,3 +48,5 @@ def register_handlers1(dp : Dispatcher):
     dp.register_message_handler(help_command, commands = ['help'])
     dp.register_message_handler(whatsnew, commands = ['whats_new'])
     dp.register_message_handler(get_db_command, commands = ['get_db'])
+    # dp.register_message_handler(handle_messages, commands=['calendar'])
+    # dp.register_callback_query_handler(handle_date_selection)

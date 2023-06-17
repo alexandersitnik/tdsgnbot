@@ -1,5 +1,7 @@
+import asyncio
 from calendar import monthrange
 import random
+import aiogram
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import State, StatesGroup
 from aiogram import types, Dispatcher
@@ -7,6 +9,7 @@ from aiogram.dispatcher.filters import Text
 from create_bot import bot
 from datetime import datetime
 from register_handlers import admins
+import calendar
 import sqlite3
 
 superAdmin_ID = 265007461
@@ -17,6 +20,106 @@ try:
     c = db.cursor()
 except:
     pass
+#-------------------------
+
+users_calendar = {}
+
+
+def create_calendar(year, month):
+    markup = types.InlineKeyboardMarkup(row_width=7)
+    days = [types.InlineKeyboardButton(calendar.day_abbr[i], callback_data=str(i)) for i in range(7)]
+    markup.row(*days)
+
+    my_calendar = calendar.monthcalendar(year, month)
+    for week in my_calendar:
+        days = [
+            types.InlineKeyboardButton(str(day) if day != 0 else " ", callback_data=str(day))
+            for day in week
+        ]
+        markup.row(*days)
+
+    markup.row(
+        types.InlineKeyboardButton("<<", callback_data="PREV_MONTH"),
+        types.InlineKeyboardButton(">>", callback_data="NEXT_MONTH"),
+    )
+
+    return markup
+
+
+async def show_calendar(message: types.Message, current_year: int, current_month: int):
+    chat_id = message.chat.id
+    calendar_markup = await create_calendar(current_year, current_month)
+    
+    if message.reply_to_message:
+        await bot.edit_message_text(
+            f"Выберите дату:",
+            chat_id,
+            message.reply_to_message.message_id,
+            reply_markup=calendar_markup
+        )
+    else:
+        sent_message = await bot.send_message(
+            chat_id,
+            f"Выберите дату:",
+            reply_markup=calendar_markup
+        )
+        await sent_message.reply_to(message)
+
+
+
+async def handle_callback_query(query: types.CallbackQuery):
+    chat_id = query.message.chat.id
+    year = users_calendar[chat_id].get('year', 2023)  # Замените на текущий год
+    month = users_calendar[chat_id].get('month', 6)  # Замените на текущий месяц
+
+    if query.data == 'PREV_MONTH':
+        if month == 1:
+            year -= 1
+            month = 12
+        else:
+            month -= 1
+    elif query.data == 'NEXT_MONTH':
+        if month == 12:
+            year += 1
+            month = 1
+        else:
+            month += 1
+
+    users_calendar[chat_id]['year'] = year
+    users_calendar[chat_id]['month'] = month
+
+    await show_calendar(query.message.chat.id, year, month)
+
+
+
+async def start_command(message: types.Message):
+    chat_id = message.chat.id
+    users_calendar[chat_id] = {}
+
+    current_year = 2023  # Замените на текущий год
+    current_month = 6  # Замените на текущий месяц
+
+    users_calendar[chat_id]['year'] = current_year
+    users_calendar[chat_id]['month'] = current_month
+
+    await show_calendar(chat_id, current_year, current_month)
+
+
+async def handle_updates():
+    while True:
+        updates = await bot.get_updates(offset=None, timeout=30)
+        for update in updates:
+            if isinstance(update, types.Message):
+                message = update.message
+                if message.text == '/start':
+                    await start_command(message)
+
+            elif isinstance(update, types.CallbackQuery):
+                query = update.callback_query
+                await handle_callback_query(query)
+
+        await asyncio.sleep(1)
+
 
 #-------------------------------Запись удаленки через машину состояний------------------------------------------------
 
@@ -230,3 +333,5 @@ def register_handlers_distant(dp: Dispatcher):
     dp.register_message_handler(delete_distant, commands=['delete_last_distant'])
     dp.register_message_handler(in_jail, commands=['jail'])
     dp.register_message_handler(iq_staistics, commands=['iq'])
+    dp.register_callback_query_handler(handle_callback_query, lambda query: query.data in ('PREV_MONTH', 'NEXT_MONTH'))
+    dp.register_message_handler(start_command, commands=['calendar'])
