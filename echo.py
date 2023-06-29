@@ -12,7 +12,7 @@ try:
 except:
     pass
 async def inline_echo(inline_query: InlineQuery):
-    cocksize_len = random.randint(1, 160)
+    cocksize_len = random.randint(-160, 228)
     epithet = random.choice(epithets)
     telegramID = inline_query.from_user.id
     memberID = c.execute("SELECT ID FROM members WHERE TelegramID = ?", (telegramID,)).fetchone()[0]
