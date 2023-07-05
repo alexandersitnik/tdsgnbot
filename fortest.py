@@ -18,7 +18,7 @@ async def congrats_from_porfirii(session: ClientSession, base_congrats: str, **k
     :base_congrats -- шаблон поздравления передаваемый Порфирьевичу\n
     :length -- задаёт длину генерируемой последовательности (кол-во слов). По умолчанию 50.\n
     """
-    generated_text_lenght = 50 if len(kwargs) == 0 else kwargs["length"]
+    generated_text_lenght = 60 if len(kwargs) == 0 else kwargs["length"]
     post_payload = {"prompt": base_congrats, "length": generated_text_lenght}
     log.info('Trying to connect to porfirii API...')
     async with session.post('https://pelevin.gpt.dobro.ai/generate/', json=post_payload, ssl=False) as resp:

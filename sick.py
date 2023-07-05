@@ -58,12 +58,17 @@ async def sick_is_active(message: types.Message, state: FSMContext):
         else:
             await message.answer("Неверный ответ. Попробуй еще раз")
             return
+    workingFromHome = 'переменная не определена'
+    if(data['isActive'] == 1):
+        workingFromHome = 'да'
+    else:
+        workingFromHome = 'нет'
     try:
         c.execute("INSERT INTO sick (MemberID, SickDate, isActive) VALUES (?, ?, ?)", (data['MemberID'], data['SickDate'], data['isActive']))
         db.commit()
         await message.answer("Запись больничного прошла успешно\n Поправляйся☀️\n\n Если вечером поймешь, что завтра не выйдешь на работу, то заполни еще один день /sick. Да-да и так каждый день, что поделать ")
         for el in admins:
-            await bot.send_message(el, "#больничные\n\n Дата: " + str(data['SickDate']).split(" ")[0] + "\n" + "Кто: " + c.execute("SELECT Name FROM members WHERE TelegramID = ?", (message.from_user.id,)).fetchone()[0] + "\n" + "Будет работать из дома: " + str(data['isActive']) + "\n\n P.S. 1 - работает из дома, 0 - нет")
+            await bot.send_message(el, "#больничные\n\n Дата: " + str(data['SickDate']).split(" ")[0] + "\n" + "Кто: " + c.execute("SELECT Name FROM members WHERE TelegramID = ?", (message.from_user.id,)).fetchone()[0] + "\n" + "Будет работать из дома: " + workingFromHome)
         await state.finish()
     except:
         await message.answer("Что-то пошло не так. Попробуй еще раз. Возможно ты уже записал больничный на эту дату, попробуй команду: /who_is_sick_today")
