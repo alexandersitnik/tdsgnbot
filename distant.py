@@ -247,7 +247,7 @@ async def my_distant(message: types.Message):
     for el in distant_member:
         distant_member_list += str(el[0])[0:10] + '\n'
     if distant_member_list != []:
-        await message.answer("Твои удалёнки этого месяца:\n" + "\n" + distant_member_list + "\n" + "Осталось удалёнок: " + str(distant_member_remainder))
+        await message.answer("Твои удалёнки этого месяца:\n" + "\n" + distant_member_list + "\n")
     else:
         await message.answer("У тебя ещё нет удалёнок в этом месяце")
 
