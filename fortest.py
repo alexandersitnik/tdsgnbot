@@ -40,6 +40,7 @@ async def get_new_year_fortune(message: types.Message):
         log.info(f"In get_new_year_fortune got unknown telegram_id. From user: {message.from_user.first_name}")
     sender_name = sender_member if sender_member is not None else message.from_user.first_name
     fortune_template = f"{sender_name}, вот что предлагаю сделать с ремонтниками:"
+    # fortune_template = f"@BovgiraV, поздравляю с днём рождения и желаю тебе"
     generated_fortune = None
     reply_message = await message.reply("Составляю персональное предсказние...📝")
     aiohttp_session = ClientSession(trust_env=True)
@@ -49,6 +50,25 @@ async def get_new_year_fortune(message: types.Message):
         f" сможешь всё. А вот мои нейромозги пока не работают..."
     await aiohttp_session.close()
     await reply_message.edit_text("Провожу соц опрос...👮🏻‍♂️")
+    await sleep(2)
+    await reply_message.edit_text(f"{fortune_template}{generated_fortune}")
+
+async def happy(message: types.Message):
+    sender_member = message.from_user.first_name
+    if sender_member is None:
+        log.info(f"In get_new_year_fortune got unknown telegram_id. From user: {message.from_user.first_name}")
+    sender_name = sender_member if sender_member is not None else message.from_user.first_name
+    # fortune_template = f"{sender_name}, вот что предлагаю сделать с ремонтниками:"
+    fortune_template = f"@BovgiraV, с др, ёпта! Желаю тебе"
+    generated_fortune = None
+    reply_message = await message.reply("Генерирую текст поздравления...📝")
+    aiohttp_session = ClientSession(trust_env=True)
+
+    generated_fortune = await congrats_from_porfirii(aiohttp_session, fortune_template, length=40)
+    generated_fortune = generated_fortune if generated_fortune is not None else \
+        f" сможешь всё. А вот мои нейромозги пока не работают..."
+    await aiohttp_session.close()
+    await reply_message.edit_text("Просматриваю праздничные открытки...🎊")
     await sleep(2)
     await reply_message.edit_text(f"{fortune_template}{generated_fortune}")
 
@@ -77,3 +97,4 @@ async def newyear_new(message: types.Message):
 
 def register_handlers_ny(dp: Dispatcher):
     dp.register_message_handler(get_new_year_fortune, commands=['prediction'])
+    dp.register_message_handler(happy, commands=['happy'])
