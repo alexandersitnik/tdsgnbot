@@ -97,4 +97,4 @@ async def newyear_new(message: types.Message):
 
 def register_handlers_ny(dp: Dispatcher):
     dp.register_message_handler(get_new_year_fortune, commands=['prediction'])
-    dp.register_message_handler(hr, commands=['happy'])
+    dp.register_message_handler(hr, commands=['hr'])
