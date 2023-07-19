@@ -61,14 +61,14 @@ async def hr(message: types.Message):
     # fortune_template = f"{sender_name}, вот что предлагаю сделать с ремонтниками:"
     fortune_template = f"{sender_name}, тебе придет предложение от компании"
     generated_fortune = None
-    reply_message = await message.reply("Генерирую текст поздравления...📝")
+    reply_message = await message.reply("Мониторю Хабр Карьеру...📝")
     aiohttp_session = ClientSession(trust_env=True)
 
     generated_fortune = await congrats_from_porfirii(aiohttp_session, fortune_template, length=40)
     generated_fortune = generated_fortune if generated_fortune is not None else \
         f" сможешь всё. А вот мои нейромозги пока не работают..."
     await aiohttp_session.close()
-    await reply_message.edit_text("Просматриваю праздничные открытки...🎊")
+    await reply_message.edit_text("Настраиваюсь на сарафанное радио...📻")
     await sleep(2)
     await reply_message.edit_text(f"{fortune_template}{generated_fortune}")
 
