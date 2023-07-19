@@ -2,7 +2,7 @@ from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import State, StatesGroup
 from aiogram import types, Dispatcher
 from aiogram.dispatcher.filters import Text
-from datetime import datetime
+from datetime import datetime, timedelta
 from register_handlers import translators, admins
 import sqlite3
 
@@ -118,8 +118,6 @@ async def today_vacations(message: types.Message):
             memberName = c.execute("SELECT Name FROM members WHERE ID = ?", (vacation[0],)).fetchone()[0]
             todayVacationsAnswer += memberName + '\n'
         await message.answer(todayVacationsAnswer)
-        
-
 
 def register_handlers_vacation(dp: Dispatcher):
     dp.register_message_handler(vacation, commands="vacation", state="*")
