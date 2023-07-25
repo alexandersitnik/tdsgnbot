@@ -87,13 +87,10 @@ async def sslIsPaid (message: types.Message, state: FSMContext):
 
 
 async def get_ssl_table (message: types.Message):
-    if (message.chat.type == 'private' and message.from_user.id in admins):
-        ssl_table = c.execute("SELECT * FROM SSL").fetchall()
-        await message.answer("Таблица SSL сертификатов:")
-        for row in ssl_table:
-            await message.answer(f"Название: {row[0]}\nДата начала: {row[1]}\nДата окончания: {row[2]}\nПлатный: {row[3]}")
-    else:
-        await message.answer("Команда доступна только администраторам")
+    ssl_table = c.execute("SELECT * FROM SSL").fetchall()
+    await message.answer("Таблица SSL сертификатов:")
+    for row in ssl_table:
+        await message.answer(f"Название: {row[0]}\nДата начала: {row[1]}\nДата окончания: {row[2]}\nПлатный: {row[3]}")
 
 def register_handlers_ssl (dp: Dispatcher):
     dp.register_message_handler(add_new_ssl, commands=['add_ssl'])
