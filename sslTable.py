@@ -25,13 +25,10 @@ class Ssl(StatesGroup):
 
 
 async def add_new_ssl (message: types.Message, state: FSMContext):
-    if (message.from_user.id in admins):
-        await message.answer(
-            "Начинаю процедуру добавления нового SSL сертификата 🧐\n\nЕсли хочешь остановить запись, то напиши /stop или «отмена»")
-        await message.answer("Введи название проекта, для которого добавляем SSL")
-        await Ssl.sslName.set()
-    else:
-        await message.answer("Команда доступна только администраторам")
+    await message.answer(
+        "Начинаю процедуру добавления нового SSL сертификата 🧐\n\nЕсли хочешь остановить запись, то напиши /stop или «отмена»")
+    await message.answer("Введи название проекта, для которого добавляем SSL")
+    await Ssl.sslName.set()
 
 
 async def stop_ssl (message: types.Message, state: FSMContext):
