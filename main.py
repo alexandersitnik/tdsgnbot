@@ -20,17 +20,17 @@ from echo import register_handlers_inline
 from weather import register_handlers_weather
 from distant import clearIQ
 from sslTable import register_handlers_ssl
-# from statistics import register_handlers_statistics
+
 scheduler = AsyncScheduler([])
 
-async def send_test():
-    await bot.send_message(265007461, text='Тестовое сообщение')
-
-#проверка
+# проверка
 logging.basicConfig(level=logging.INFO)
 
-async def on_startup(_):
+
+async def on_startup (_):
     print('Бот запущен')
+
+
 register_handlers1(dp)
 register_handlers_check(dp)
 register_handlers_members_kb(dp)
@@ -43,10 +43,10 @@ register_handlers_hookah(dp)
 register_handlers_ny(dp)
 register_handlers_weather(dp)
 register_handlers_ssl(dp)
-# register_handlers_statistics(dp)
+
 if __name__ == '__main__':
     scheduler.add_to_loop()
-    scheduler.add_job(Job('send_daily', dailyReport, None, Periods.minute, 1440, '26.07.23 11:40'))
+    scheduler.add_job(Job('send_daily', dailyReport, None, Periods.minute, 1440, '08.08.23 11:40'))
     # scheduler.add_job(Job('send_polls', create_poll, None, Periods.minute, 1440, '14.07.23 11:10'))
-    scheduler.add_job(Job('clearIQ', clearIQ, None, Periods.minute, 1440, '26.07.23 08:00'))
+    scheduler.add_job(Job('clearIQ', clearIQ, None, Periods.minute, 1440, '08.08.23 08:00'))
     executor.start_polling(dp, skip_updates=True, on_startup=on_startup)
