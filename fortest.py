@@ -59,7 +59,7 @@ async def hr(message: types.Message):
         log.info(f"In get_new_year_fortune got unknown telegram_id. From user: {message.from_user.first_name}")
     sender_name = sender_member if sender_member is not None else message.from_user.first_name
     # fortune_template = f"{sender_name}, вот что предлагаю сделать с ремонтниками:"
-    fortune_template = f"{sender_name}, тебе придет предложение от компании"
+    fortune_template = f"{sender_name}, тебя пригласят на работу в "
     generated_fortune = None
     reply_message = await message.reply("Мониторю Хабр Карьеру...📝")
     aiohttp_session = ClientSession(trust_env=True)

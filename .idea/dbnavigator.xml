@@ -21,7 +21,7 @@
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
     <open-files>
-      <object connection-id="7762a7ce-a4e5-4359-bd1f-08af06814f87" object-ref="schemas/main/tables/SSL" />
+      <object connection-id="7762a7ce-a4e5-4359-bd1f-08af06814f87" object-ref="schemas/main/tables/members" />
     </open-files>
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
