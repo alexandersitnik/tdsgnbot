@@ -6,6 +6,7 @@ from create_bot import bot
 from checkpoint import register_handlers_check
 from create_bot import dp, Bot
 from daily import dailyReport
+from tomorrow import tomorrowReport
 from polls import create_poll
 from fortest import get_new_year_fortune
 from fortest import register_handlers_ny
@@ -46,7 +47,8 @@ register_handlers_ssl(dp)
 
 if __name__ == '__main__':
     scheduler.add_to_loop()
-    scheduler.add_job(Job('send_daily', dailyReport, None, Periods.minute, 1440, '08.08.23 11:40'))
+    scheduler.add_job(Job('send_daily', dailyReport, None, Periods.minute, 1440, '11.08.23 11:40'))
+    scheduler.add_job(Job('send_tomorrow', tomorrowReport, None, Periods.minute, 1440, '10.08.23 18:50'))
     # scheduler.add_job(Job('send_polls', create_poll, None, Periods.minute, 1440, '14.07.23 11:10'))
-    scheduler.add_job(Job('clearIQ', clearIQ, None, Periods.minute, 1440, '08.08.23 08:00'))
+    scheduler.add_job(Job('clearIQ', clearIQ, None, Periods.minute, 1440, '11.08.23 08:00'))
     executor.start_polling(dp, skip_updates=True, on_startup=on_startup)
