@@ -16,12 +16,16 @@ async def tomorrowReport():
     today = datetime.today().strftime('%Y-%m-%d')
     today += ' 00:00:00'
     tomorrow = datetime.today() + timedelta(days=1)
+    tomorrow_str = datetime.today() + timedelta(days=1)
+    tomorrow = tomorrow.strftime('%Y-%m-%d')
+    tomorrow += ' 00:00:00'
 
-    week_day = tomorrow.weekday()
+    week_day = datetime.today().weekday() + 1
+
     distant_today = c.execute("SELECT Name FROM members WHERE ID IN (SELECT MemberID FROM distant WHERE DistantDate = ?)", (tomorrow,)).fetchall()
     distant_today_list = ''
     daily_report = ''
-    daily_report = '#ВечернийОтчёт \n' + 'Завтра: ' + str(tomorrow.strftime('%d.%m.%Y')) + ', ' + str(weekdays_list[week_day])+ '\n\n'
+    daily_report = '#ВечернийОтчёт \n' + 'Завтра: ' + str(tomorrow_str.strftime('%d.%m.%Y')) + ', ' + str(weekdays_list[week_day])+ '\n\n'
     if distant_today != []:
         for el in distant_today:
             distant_today_list += '— ' + str(el[0]) + '\n'
