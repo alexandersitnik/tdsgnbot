@@ -65,7 +65,7 @@ async def tomorrowReport():
     #     return response.text
     # weather = await get_weather('Новосибирск')
     # daily_report += '\n\n Температура в Томске:\n' + str(weather)
-    if week_day <5:
+    if week_day <4:
         await bot.send_message(-235938403, daily_report, parse_mode='Markdown')
         await bot.send_message(-1001723462410, daily_report, parse_mode='Markdown')
         # await bot.send_message(265007461, daily_report, parse_mode='Markdown')
