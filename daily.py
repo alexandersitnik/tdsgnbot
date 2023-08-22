@@ -51,14 +51,14 @@ async def dailyReport():
             memberName = c.execute("SELECT Name FROM members WHERE ID = ?", (vacation[0],)).fetchone()[0]
             todayVacationsAnswer += '— ' + memberName + '\n'
         daily_report += todayVacationsAnswer
-    async def get_weather(city_name):
-        # weather_url = "http://api.openweathermap.org/data/2.5/weather?q={0}&units=metric&appid=05a9fb1cecaca7a61f846213566c28f9"
-        #weather_url = "https://wttr.in/{}?0&m&T&q&lang=ru".format(city_name)
-        weather_url = "https://wttr.in/{}?m&format=2&lang=ru".format(city_name)
-        response = requests.get(weather_url)
-        return response.text
-    weather = await get_weather('Новосибирск')
-    daily_report += '\n\n Температура в Томске:\n' + str(weather)
+    # async def get_weather(city_name):
+    #     # weather_url = "http://api.openweathermap.org/data/2.5/weather?q={0}&units=metric&appid=05a9fb1cecaca7a61f846213566c28f9"
+    #     #weather_url = "https://wttr.in/{}?0&m&T&q&lang=ru".format(city_name)
+    #     weather_url = "https://wttr.in/{}?m&format=2&lang=ru".format(city_name)
+    #     response = requests.get(weather_url)
+    #     return response.text
+    # weather = await get_weather('Новосибирск')
+    # daily_report += '\n\n Температура в Томске:\n' + str(weather)
     if week_day <5:
         await bot.send_message(-235938403, daily_report, parse_mode='Markdown')
         await bot.send_message(-1001723462410, daily_report, parse_mode='Markdown')
