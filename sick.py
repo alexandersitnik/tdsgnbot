@@ -70,7 +70,7 @@ async def sick_is_active(message: types.Message, state: FSMContext):
         for el in admins:
             await bot.send_message(el, "#больничные\n\n Дата: " + str(data['SickDate']).split(" ")[0] + "\n" + "Кто: " + c.execute("SELECT Name FROM members WHERE TelegramID = ?", (message.from_user.id,)).fetchone()[0] + "\n" + "Будет работать из дома: " + workingFromHome)
         await state.finish()
-    except:
+    except ValueError:
         await message.answer("Что-то пошло не так. Попробуй еще раз. Возможно ты уже записал больничный на эту дату, попробуй команду: /who_is_sick_today")
         await state.finish()
 
